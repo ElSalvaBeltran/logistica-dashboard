@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="es">
 <head>
 <meta charset="UTF-8">
@@ -178,6 +178,7 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#0A192F;color:#e2e8f
 
 .foot{text-align:center;color:#64748b;font-size:11px;margin-top:22px;padding-top:14px;border-top:1px solid #1e3a5f}
 </style>
+<link rel="stylesheet" href="ficha.css">
 </head>
 <body>
 <div class="wrap">
@@ -230,6 +231,8 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#0A192F;color:#e2e8f
 
 // Los datos viven dentro de este mismo archivo: no hay fetch,
 // asi funciona igual abriendo el archivo con doble clic que publicado en un servidor.
+<script src="ficha.js"></script>
+<script>
 document.addEventListener('DOMContentLoaded', arrancar);
 
 // ── Construir la página ────────────────────────────────────
@@ -532,115 +535,39 @@ function pintaDetalles(){
 }
 
 // ── Ficha de tarea ─────────────────────────────────────────
-var HISTORIAL = [];
+// La ficha vive en ficha.js y la comparte con el Gantt.
+// Aqui solo se le dice donde pintarla y como volver.
+var NODO_ORIGEN = null;
+
+FICHA.configurar({
+  render: function(tid, ctrl){
+    document.getElementById('fichas').innerHTML =
+      '<div id="ficha-actual">' +
+      FICHA.html(tid, {
+        volver: ctrl.puedeVolver ? 'Volver' : 'Volver al diagrama',
+        onVolver: 'volverNodo()'
+      }) +
+      '</div>';
+    document.querySelectorAll('.detalle').forEach(function(d){ d.classList.remove('show'); });
+    document.getElementById('ayuda').style.display = 'none';
+    document.getElementById('ficha-actual').scrollIntoView({behavior:'smooth', block:'start'});
+  },
+  irNodo: function(id){ NODO_ORIGEN = null; FICHA.limpiar(); ver(id); }
+});
 
 function ficha(tid, nodoOrigen){
-  var t = DATOS.tareas[tid];
-  if(!t) return;
-
-  HISTORIAL.push({nodo: nodoOrigen || null, scroll: window.scrollY});
-
-  // Lista plana de tareas para navegar
-  var ids = Object.keys(DATOS.tareas);
-  var idx = ids.indexOf(tid);
-
-  var estadoTag = t.estado === 'hecho' ? '<span class="fi-tag ok">✓ COMPLETADA</span>'
-                : t.estado === 'user' ? '<span class="fi-tag wa">! ACCIÓN DEL USUARIO</span>'
-                : '<span class="fi-tag">PENDIENTE</span>';
-
-  var h = '<div class="ficha show" id="ficha-actual">';
-  h += '<div class="fi-head">';
-  h += '<button class="fi-cerrar" onclick="volverNodo()">✕</button>';
-  h += '<div class="cod">' + tid + '</div>';
-  h += '<h2>' + t.nombre + '</h2>';
-  h += '<div class="fi-meta">' + estadoTag +
-       '<span class="fi-tag fase">Fase ' + t.fase + '</span>' +
-       (t.dias ? '<span class="fi-tag">' + t.dias + ' día' + (t.dias === 1 ? '' : 's') + ' de trabajo</span>' : '') +
-       (t.fecha ? '<span class="fi-tag">Completada el ' + t.fecha + '</span>' : '') +
-       '</div></div>';
-
-  h += '<div class="fi-body">';
-  h += '<div class="bloque porque"><h3>Para qué sirve</h3><p>' + t.porque + '</p></div>';
-
-  h += '<div class="fi-2col">';
-  if (t.entregable){
-    h += '<div class="bloque"><h3>Qué produce</h3><p>' + t.entregable + '</p></div>';
-  }
-  h += '<div class="bloque"><h3>De qué depende</h3><p>';
-  if (t.depende && t.depende.length){
-    h += t.depende.map(function(d){
-      var dt = DATOS.tareas[d];
-      return dt ? '<span class="chip" style="cursor:pointer" onclick="ficha(\'' + d + '\',null)">' + d + ' · ' + dt.nombre + '</span>' : d;
-    }).join(' ');
-  } else {
-    h += 'No depende de nada: puede empezar de inmediato.';
-  }
-  h += '</p></div></div>';
-
-  if (t.nota){
-    h += '<div class="bloque amarillo"><h3>Nota de avance</h3><p>' + t.nota + '</p></div>';
-  }
-
-  // Veredicto de la fase a la que pertenece esta tarea
-  var v = veredictoFase(t.fase);
-  if (t.estado !== 'hecho'){
-    var cl = v.holgura < 0 ? 'rojo' : (v.holgura < 7 ? 'amarillo' : 'azul');
-    var txt = v.holgura < 0
-      ? 'Faltan <b>' + Math.abs(v.holgura) + ' días</b> y no alcanzan: la fase cierra el ' +
-        DATOS.meta.fases[t.fase].fin + '. Cada día sin avanzar aquí empuja todo lo de abajo.'
-      : 'Sobran <b>' + v.holgura + ' días</b> de margen. La fase cierra el ' +
-        DATOS.meta.fases[t.fase].fin + ' y va en camino.';
-    h += '<div class="bloque ' + cl + '" style="margin-top:13px"><h3>Situación de la fase ' +
-         t.fase + ' · ' + DATOS.meta.fases[t.fase].nombre + '</h3><p>' + txt + '</p></div>';
-  }
-
-  // Qué desbloquea
-  var desbloquea = [];
-  for (var k in DATOS.tareas){
-    if (DATOS.tareas[k].depende && DATOS.tareas[k].depende.indexOf(tid) >= 0) desbloquea.push(k);
-  }
-  if (desbloquea.length){
-    h += '<div class="bloque" style="margin-top:13px"><h3>Qué desbloquea</h3><div class="chips">';
-    desbloquea.forEach(function(d){
-      h += '<span class="chip" style="cursor:pointer" onclick="ficha(\'' + d + '\',null)">' + d + ' · ' + DATOS.tareas[d].nombre + '</span>';
-    });
-    h += '</div></div>';
-  }
-
-  var nodos = [];
-  DATOS.nodos.forEach(function(n){ if (n.tareas.indexOf(tid) >= 0) nodos.push(n); });
-  if (nodos.length){
-    h += '<div class="bloque" style="margin-top:13px"><h3>Dónde vive en la arquitectura</h3><div class="chips">';
-    nodos.forEach(function(n){
-      h += '<span class="chip dom" style="cursor:pointer" onclick="ver(\'' + n.id + '\')">' + n.icono + ' ' + n.nombre + '</span>';
-    });
-    h += '</div></div>';
-  }
-
-  h += '<div class="fi-nav">';
-  if (idx > 0) h += '<button onclick="ficha(\'' + ids[idx-1] + '\',null)">‹ ' + ids[idx-1] + '</button>'; else h += '<span></span>';
-  h += '<button class="volver" onclick="volverNodo()">← Volver al diagrama</button>';
-  if (idx < ids.length-1) h += '<button onclick="ficha(\'' + ids[idx+1] + '\',null)">' + ids[idx+1] + ' ›</button>'; else h += '<span></span>';
-  h += '</div></div></div>';
-
-  document.getElementById('fichas').innerHTML = h;
-
-  // Ocultar el detalle del nodo mientras se lee la ficha
-  document.querySelectorAll('.detalle').forEach(function(d){ d.classList.remove('show'); });
-  document.getElementById('ayuda').style.display = 'none';
-
-  document.getElementById('ficha-actual').scrollIntoView({behavior:'smooth', block:'start'});
+  if (!DATOS.tareas[tid]) return;
+  if (nodoOrigen !== undefined) NODO_ORIGEN = nodoOrigen || null;
+  FICHA.abrir(tid);
+  NODO_ORIGEN = NODO_ORIGEN;   // se conserva para el boton volver
 }
 
 function volverNodo(){
-  var ult = HISTORIAL.pop();
+  if (FICHA.hay()){ FICHA.atras(); return; }
+  FICHA.limpiar();
   document.getElementById('fichas').innerHTML = '';
-  if (ult && ult.nodo){
-    ver(ult.nodo, true);
-  } else {
-    cerrar();
-    window.scrollTo({top: ult ? ult.scroll : 0, behavior:'smooth'});
-  }
+  if (NODO_ORIGEN){ ver(NODO_ORIGEN, true); }
+  else { cerrar(); }
 }
 
 // ── Abrir / cerrar detalle de nodo ─────────────────────────
