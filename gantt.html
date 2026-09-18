@@ -7,66 +7,57 @@
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:'Segoe UI',system-ui,sans-serif;background:#0A192F;color:#e2e8f0;line-height:1.5}
-.wrap{max-width:1400px;margin:0 auto;padding:22px}
+.wrap{max-width:1500px;margin:0 auto;padding:20px}
+.head{text-align:center;margin-bottom:16px}
+.head h1{font-size:22px;font-weight:700;color:#fff}
+.head p{color:#94a3b8;font-size:12.5px;margin-top:4px}
 
-.head{text-align:center;margin-bottom:18px}
-.head h1{font-size:23px;font-weight:700;color:#fff}
-.head p{color:#94a3b8;font-size:13px;margin-top:5px}
+.zoom{display:flex;justify-content:center;gap:7px;flex-wrap:wrap;margin-bottom:16px}
+.zoom button{background:#132241;border:1px solid #1e3a5f;color:#cbd5e1;padding:9px 16px;border-radius:9px;cursor:pointer;font-size:12.5px;font-family:inherit;font-weight:600;transition:all .15s}
+.zoom button:hover{border-color:#007BFF;color:#fff}
+.zoom button.on{background:#007BFF;border-color:#007BFF;color:#fff}
+.zoom button .badge{font-size:9.5px;opacity:.75;display:block;margin-top:2px;font-weight:500}
+.zoom button.urgente:not(.on){border-color:#ef4444;color:#fca5a1}
 
-.ctrl{display:flex;justify-content:center;gap:9px;flex-wrap:wrap;margin-bottom:18px}
-.ctrl button{background:#132241;border:1px solid #1e3a5f;color:#cbd5e1;padding:8px 15px;border-radius:9px;cursor:pointer;font-size:12.5px;font-family:inherit;font-weight:600;transition:all .15s}
-.ctrl button:hover{border-color:#007BFF;color:#fff}
-.ctrl button.on{background:#007BFF;border-color:#007BFF;color:#fff}
-
-/* ══ RESUMEN ══ */
-.res{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:11px;margin-bottom:18px}
-.rc{background:#0f1d33;border:1px solid #1e3a5f;border-radius:12px;padding:13px 15px}
-.rc .n{font-size:22px;font-weight:700;color:#52D8A1;line-height:1.1}
+.res{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-bottom:16px}
+.rc{background:#0f1d33;border:1px solid #1e3a5f;border-radius:11px;padding:12px 14px}
+.rc .n{font-size:21px;font-weight:700;color:#52D8A1;line-height:1.1}
 .rc .n.ro{color:#ef4444}.rc .n.az{color:#38bdf8}.rc .n.am{color:#f59e0b}
-.rc .l{font-size:10.5px;color:#64748b;text-transform:uppercase;letter-spacing:.6px;margin-top:3px}
-.rc .d{font-size:11.5px;color:#94a3b8;margin-top:5px}
+.rc .l{font-size:10px;color:#64748b;text-transform:uppercase;letter-spacing:.6px;margin-top:3px}
+.rc .d{font-size:11px;color:#94a3b8;margin-top:4px}
 
-/* ══ GANTT ══ */
-.gantt{background:#0f1d33;border:1px solid #1e3a5f;border-radius:15px;padding:0;overflow:hidden}
+.escala{background:#0f1d33;border:1px solid #1e3a5f;border-left:4px solid #38bdf8;border-radius:11px;padding:13px 16px;margin-bottom:14px;font-size:12.5px;color:#94a3b8}
+.escala b{color:#7dd3fc}
+
+.gantt{background:#0f1d33;border:1px solid #1e3a5f;border-radius:14px;overflow:hidden}
 .gwrap{overflow-x:auto}
-table{border-collapse:collapse;width:100%;min-width:1050px}
+table{border-collapse:collapse}
 th,td{padding:0;font-size:12.5px}
-
-/* Columna izquierda fija */
-.col-nom{position:sticky;left:0;background:#0f1d33;z-index:3;border-right:2px solid #1e3a5f;min-width:230px;text-align:left}
-.gwrap th.col-nom,.gwrap td.col-nom{padding:9px 13px}
-
-thead th{background:#0c1829;color:#94a3b8;font-weight:700;font-size:10.5px;text-transform:uppercase;letter-spacing:.7px;padding:11px 7px;border-bottom:2px solid #1e3a5f;position:sticky;top:0;z-index:4;text-align:center}
+.col-nom{position:sticky;left:0;background:#0f1d33;z-index:3;border-right:2px solid #1e3a5f;width:290px;min-width:290px;text-align:left;padding:8px 12px}
+thead th{background:#0c1829;color:#94a3b8;font-weight:700;font-size:10px;text-transform:uppercase;letter-spacing:.6px;padding:9px 6px;border-bottom:2px solid #1e3a5f;text-align:center}
 thead th.col-nom{text-align:left;z-index:5}
 
-/* Cabecera de meses */
-.meses th{background:#0a1424;font-size:10.5px;color:#64748b;padding:6px 4px;border-bottom:1px solid #1a2f4d;text-align:center;letter-spacing:.5px}
-
-/* Filas de fase */
 tr.fase{background:#12203a}
-tr.fase td{border-bottom:1px solid #1e3a5f;padding:11px 0}
-tr.fase .fn{font-weight:700;color:#fff;font-size:13px}
+tr.fase td{border-bottom:2px solid #1e3a5f;padding:10px 0}
+tr.fase .fn{font-weight:700;color:#fff;font-size:13.5px}
 tr.fase .fs{font-size:10.5px;color:#64748b;margin-top:2px}
 tr.fase .col-nom{cursor:pointer}
 tr.fase .col-nom:hover{background:#16305a}
 
-/* Filas de tarea */
-tr.tar td{border-bottom:1px solid #16263f;padding:6px 0}
+tr.tar td{border-bottom:1px solid #16263f;padding:7px 0}
 tr.tar:hover td{background:#12203a}
-tr.tar .col-nom{padding-left:28px;font-size:12px;color:#94a3b8}
-tr.tar .tid{font-family:'Courier New',monospace;font-size:10.5px;color:#64748b;margin-right:7px}
+tr.tar .col-nom{padding-left:24px;font-size:12.5px;color:#94a3b8;cursor:pointer}
+tr.tar .col-nom:hover{background:#16305a}
+tr.tar .tid{font-family:'Courier New',monospace;font-size:10.5px;color:#64748b;margin-right:6px}
 tr.tar.hecho .col-nom{color:#52D8A1}
 tr.tar.user .col-nom{color:#fca5a5}
 
-/* Celdas de barra */
-td.barra{position:relative;height:26px;padding:0}
-
-/* LA BARRA */
-.b{position:absolute;height:15px;top:50%;transform:translateY(-50%);border-radius:5px;transition:all .2s;cursor:pointer}
-.b:hover{filter:brightness(1.25);box-shadow:0 0 13px rgba(255,255,255,.25)}
-.b.fase{height:20px;border-radius:7px;font-size:10.5px;color:#fff;font-weight:700;display:flex;align-items:center;padding:0 9px;white-space:nowrap;overflow:hidden}
-
-/* Colores por estado */
+td.barra{position:relative;height:30px;padding:0}
+.b{position:absolute;height:18px;top:50%;transform:translateY(-50%);border-radius:5px;cursor:pointer;transition:filter .15s,box-shadow .15s;min-width:3px}
+.b:hover{filter:brightness(1.3);box-shadow:0 0 12px rgba(255,255,255,.3);z-index:6}
+.b .etq{position:absolute;left:6px;top:50%;transform:translateY(-50%);font-size:9.5px;color:#fff;font-weight:600;white-space:nowrap;pointer-events:none;text-shadow:0 1px 2px rgba(0,0,0,.6)}
+.b.fase{height:24px;border-radius:6px}
+.b .prog{position:absolute;left:0;top:0;bottom:0;background:rgba(255,255,255,.3);border-radius:5px}
 .b.hecho{background:linear-gradient(90deg,#059669,#10b981)}
 .b.activo{background:linear-gradient(90deg,#0284c7,#38bdf8)}
 .b.retraso{background:linear-gradient(90deg,#dc2626,#ef4444)}
@@ -74,80 +65,59 @@ td.barra{position:relative;height:26px;padding:0}
 .b.pend{background:#475569}
 .b.user{background:linear-gradient(90deg,#b91c1c,#ef4444)}
 
-/* Barra de progreso interno */
-.b .prog{position:absolute;left:0;top:0;bottom:0;background:rgba(255,255,255,.32);border-radius:5px}
+.hoylin{position:absolute;top:0;bottom:0;width:2px;background:#fbbf24;z-index:2;pointer-events:none}
+.hoylin .lb{position:absolute;top:2px;left:4px;font-size:9px;color:#fbbf24;font-weight:700;white-space:nowrap}
+.hito{position:absolute;top:50%;transform:translate(-50%,-50%) rotate(45deg);width:14px;height:14px;background:#fbbf24;border:2px solid #0f1d33;z-index:3;cursor:pointer}
 
-/* Hoy */
-.hoy{position:absolute;top:0;bottom:0;width:2px;background:#fbbf24;z-index:2;pointer-events:none}
-.hoy::before{content:'HOY';position:absolute;top:-1px;left:3px;font-size:8.5px;color:#fbbf24;font-weight:700;letter-spacing:.4px}
-
-/* Hitos */
-.hito{position:absolute;top:50%;transform:translate(-50%,-50%) rotate(45deg);width:13px;height:13px;background:#fbbf24;border:2px solid #0f1d33;z-index:2}
-
-/* Leyenda */
-.leyenda{display:flex;gap:15px;justify-content:center;flex-wrap:wrap;margin-top:16px;font-size:11.5px}
-.leyenda span{display:flex;align-items:center;gap:6px;color:#94a3b8}
+.leyenda{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:14px;font-size:11.5px}
+.leyenda span{display:flex;align-items:center;gap:5px;color:#94a3b8}
 .leyenda .d{width:14px;height:9px;border-radius:3px}
 
-/* Detalle */
-.detalle{background:#fff;color:#1e293b;border-radius:15px;padding:20px;margin-top:18px;display:none;animation:ap .2s ease}
+.detalle{background:#fff;color:#1e293b;border-radius:14px;padding:20px;margin-top:16px;display:none;animation:ap .2s ease}
 .detalle.show{display:block}
 @keyframes ap{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:translateY(0)}}
 .dh{display:flex;align-items:flex-start;gap:12px;margin-bottom:14px;padding-bottom:12px;border-bottom:2px solid #e2e8f0}
 .dh h2{font-size:18px;font-weight:700;color:#0f172a;flex:1}
 .dh p{font-size:12.5px;color:#64748b;margin-top:3px}
 .dx{background:#f1f5f9;border:none;width:28px;height:28px;border-radius:50%;cursor:pointer;font-size:14px;color:#64748b;font-weight:700}
-.dg{display:grid;grid-template-columns:1fr 1fr;gap:13px}
+.dg{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 @media(max-width:720px){.dg{grid-template-columns:1fr}}
 .bk{background:#f8fafc;border-radius:10px;padding:13px}
 .bk h3{font-size:11px;text-transform:uppercase;letter-spacing:.7px;color:#64748b;margin-bottom:7px;font-weight:700}
 .bk p{font-size:13px;color:#334155;line-height:1.6}
 .bk.az{border-left:4px solid #007BFF}
 .bk.ro{background:#fee2e2}.bk.ro h3{color:#991b1b}
-.bk.am{background:#fef3c7}.bk.am h3{color:#92400e}
-.num{font-size:26px;font-weight:700;line-height:1.1}
-.num.ok{color:#059669}.num.mal{color:#dc2626}.num.warn{color:#d97706}
-
-.foot{text-align:center;color:#64748b;font-size:11px;margin-top:22px;padding-top:14px;border-top:1px solid #1e3a5f}
+.num{font-size:25px;font-weight:700;line-height:1.1}
+.num.ok{color:#059669}.num.mal{color:#dc2626}
+.tt{width:100%;border-collapse:collapse;font-size:12.5px}
+.tt th{text-align:left;padding:7px 8px;color:#64748b;font-size:10.5px;text-transform:uppercase;border-bottom:2px solid #e2e8f0}
+.tt td{padding:7px 8px;border-bottom:1px solid #f1f5f9;color:#334155}
+.tt tr:hover td{background:#f8fafc}
+.punto{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:6px}
+.foot{text-align:center;color:#64748b;font-size:11px;margin-top:20px;padding-top:14px;border-top:1px solid #1e3a5f}
 </style>
 </head>
 <body>
 <div class="wrap">
-
   <div class="head">
     <h1>📅 SOON — Diagrama de Gantt</h1>
-    <p>28 semanas · 8 fases · 92 tareas · haz clic en una fase para ver su situación real</p>
+    <p>Cambia el zoom para ver el detalle real: la escala anual aplasta las tareas</p>
   </div>
-
-  <div class="ctrl">
-    <button class="on" onclick="modo('todo',this)">Todo el proyecto</button>
-    <button onclick="modo('fase0',this)">Solo Fase 0</button>
-    <button onclick="verTareas(this)">Mostrar tareas</button>
-    <button onclick="irHoy()">Ir a hoy</button>
-  </div>
-
+  <div class="zoom" id="zoom"></div>
   <div class="res" id="res"></div>
-
-  <div class="gantt">
-    <div class="gwrap" id="gwrap"></div>
-  </div>
-
+  <div class="escala" id="escala"></div>
+  <div class="gantt"><div class="gwrap" id="gwrap"></div></div>
   <div class="leyenda">
     <span><span class="d" style="background:linear-gradient(90deg,#059669,#10b981)"></span> Hecho</span>
     <span><span class="d" style="background:linear-gradient(90deg,#0284c7,#38bdf8)"></span> Se puede trabajar</span>
-    <span><span class="d" style="background:linear-gradient(90deg,#dc2626,#ef4444)"></span> Atrasado / urgente</span>
+    <span><span class="d" style="background:linear-gradient(90deg,#dc2626,#ef4444)"></span> Urgente</span>
     <span><span class="d" style="background:#475569"></span> Pendiente</span>
     <span><span class="d" style="background:#334155"></span> Bloqueado</span>
     <span><span style="color:#fbbf24">◆</span> Hito</span>
     <span><span style="color:#fbbf24">│</span> Hoy</span>
   </div>
-
   <div class="detalle" id="detalle"></div>
-
-  <div class="foot">
-    SOON · Gantt generado desde el cronograma nivel 3 (E-RL-004) · <span id="fhoy"></span>
-  </div>
-
+  <div class="foot">SOON · Gantt desde el cronograma nivel 3 (E-RL-004) · <span id="fhoy"></span></div>
 </div>
 
 <script>
@@ -155,20 +125,13 @@ td.barra{position:relative;height:26px;padding:0}
 </script>
 
 <script>
-// ══════════════════════════════════════════════════════════
-//  MOTOR
-// ══════════════════════════════════════════════════════════
 var HOY = new Date(DATOS.meta.hoy + 'T00:00:00');
 var FACTOR = 1.4, FINDE = 1.4;
-var INICIO = new Date(DATOS.meta.fases.F0.inicio + 'T00:00:00');
-var FIN    = new Date(DATOS.meta.fases.F7.fin + 'T00:00:00');
-var DIAS_TOTAL = Math.round((FIN - INICIO) / 86400000);
-
-var verTareasOn = false, modoActual = 'todo';
+var FASES = Object.keys(DATOS.meta.fases);
 
 function fecha(s){ return new Date(s + 'T00:00:00'); }
 function dias(a,b){ return Math.round((b-a)/86400000); }
-function pct(d){ return (d / DIAS_TOTAL) * 100; }
+function sumaDias(d,n){ var f = new Date(d.getTime()); f.setDate(f.getDate()+n); return f; }
 
 function esfuerzoFase(f){
   var total = 0, hecho = 0;
@@ -184,13 +147,14 @@ function veredictoFase(f){
   var e = esfuerzoFase(f);
   var queda = dias(HOY, fecha(DATOS.meta.fases[f].fin));
   var necesita = Math.ceil(e.resta * FACTOR * FINDE);
-  return {esfuerzo: e, queda: queda, necesita: necesita, holgura: queda - necesita};
+  return {esfuerzo:e, queda:queda, necesita:necesita, holgura:queda-necesita,
+          pct: e.total ? Math.round(e.hecho/e.total*100) : 0};
 }
 function desbloqueada(id){
   var t = DATOS.tareas[id];
   if (!t || t.estado === 'hecho') return false;
   if (!t.depende || !t.depende.length) return true;
-  for (var i = 0; i < t.depende.length; i++){
+  for (var i=0;i<t.depende.length;i++){
     var dt = DATOS.tareas[t.depende[i]];
     if (dt && dt.estado !== 'hecho') return false;
   }
@@ -204,178 +168,223 @@ function clasificar(id){
   if (!desbloqueada(id)) return 'bloq';
   return veredictoFase(t.fase).holgura < 0 ? 'retraso' : 'activo';
 }
-
-// Fechas reales de cada fase
-function fechasFase(f){
-  var fas = DATOS.meta.fases[f];
-  return {ini: fecha(fas.inicio), fin: fecha(fas.fin), dur: dias(fecha(fas.inicio), fecha(fas.fin))};
+function tareasDe(f){
+  var ids = [];
+  for (var id in DATOS.tareas) if (DATOS.tareas[id].fase === f) ids.push(id);
+  var orden = [], puestas = {}, pend = ids.slice(), guard = 0;
+  while (pend.length && guard++ < 300){
+    var avance = false;
+    for (var i = 0; i < pend.length; i++){
+      var id = pend[i], t = DATOS.tareas[id], listo = true;
+      for (var j = 0; j < (t.depende||[]).length; j++){
+        var d = t.depende[j];
+        if (ids.indexOf(d) >= 0 && !puestas[d]){ listo = false; break; }
+      }
+      if (listo){ orden.push(id); puestas[id] = 1; pend.splice(i,1); avance = true; break; }
+    }
+    if (!avance){ orden = orden.concat(pend); break; }
+  }
+  return orden;
 }
 
-// ══════════════════════════════════════════════════════════
-//  RESUMEN
-// ══════════════════════════════════════════════════════════
+var ZOOM = [
+  {id:'todo',    nombre:'Todo el proyecto', sub:'28 semanas', px:4.5, desde:null, hasta:null},
+  {id:'tres',    nombre:'3 meses',          sub:'F0 a F2',     px:13,  desde:'F0', hasta:'F2'},
+  {id:'mes',     nombre:'1 mes',            sub:'Fase 0',      px:40,  desde:'F0', hasta:'F0'},
+  {id:'semanas', nombre:'2 semanas',        sub:'detalle',     px:78,  desde:'F0', hasta:'F0'}
+];
+var zoomActual = 'mes';
+
+function rangoZoom(){
+  var z = ZOOM.filter(function(x){ return x.id === zoomActual; })[0];
+  var ini, fin;
+  if (z.desde){
+    ini = fecha(DATOS.meta.fases[z.desde].inicio);
+    fin = fecha(DATOS.meta.fases[z.hasta].fin);
+  } else {
+    ini = fecha(DATOS.meta.fases[FASES[0]].inicio);
+    fin = fecha(DATOS.meta.fases[FASES[FASES.length-1]].fin);
+  }
+  return {ini:ini, fin:fin, px:z.px, dias:dias(ini,fin)};
+}
+
 function pintaResumen(){
-  var hechas = 0, tot = 0, act = 0, ret = 0, usr = 0;
+  var hechas=0, tot=0, act=0, ret=0, usr=0;
   for (var id in DATOS.tareas){
     tot++;
     var c = clasificar(id);
-    if (c === 'hecho') hechas++;
-    if (c === 'activo') act++;
-    if (c === 'retraso') ret++;
-    if (c === 'user') usr++;
+    if (c==='hecho') hechas++;
+    if (c==='activo') act++;
+    if (c==='retraso') ret++;
+    if (c==='user') usr++;
   }
-  var fc = 'F0', v = veredictoFase('F0');
-
+  var v = veredictoFase('F0');
   document.getElementById('res').innerHTML =
-    '<div class="rc"><div class="n">' + hechas + ' / ' + tot + '</div><div class="l">tareas completadas</div>' +
-      '<div class="d">' + Math.round(hechas/tot*100) + '% del total</div></div>' +
-    '<div class="rc"><div class="n az">' + act + '</div><div class="l">desbloqueadas ahora</div>' +
-      '<div class="d">se pueden trabajar hoy</div></div>' +
-    '<div class="rc"><div class="n ro">' + ret + '</div><div class="l">urgentes</div>' +
-      '<div class="d">la fase no alcanza</div></div>' +
-    '<div class="rc"><div class="n am">' + usr + '</div><div class="l">esperan tu acción</div>' +
-      '<div class="d">no son programación</div></div>' +
-    '<div class="rc"><div class="n ' + (v.holgura < 0 ? 'ro' : 'ok') + '">' +
-      (v.holgura < 0 ? v.holgura : '+' + v.holgura) + ' d</div>' +
-      '<div class="l">margen de Fase 0</div>' +
-      '<div class="d">' + (v.holgura < 0 ? 'no alcanza al hito' : 'alcanza con margen') + '</div></div>';
+    '<div class="rc"><div class="n">'+hechas+' / '+tot+'</div><div class="l">tareas completadas</div>'+
+      '<div class="d">'+Math.round(hechas/tot*100)+'% del total</div></div>'+
+    '<div class="rc"><div class="n az">'+act+'</div><div class="l">desbloqueadas</div>'+
+      '<div class="d">se pueden trabajar hoy</div></div>'+
+    '<div class="rc"><div class="n ro">'+ret+'</div><div class="l">urgentes</div>'+
+      '<div class="d">la fase no alcanza</div></div>'+
+    '<div class="rc"><div class="n am">'+usr+'</div><div class="l">esperan tu acción</div>'+
+      '<div class="d">no son programación</div></div>'+
+    '<div class="rc"><div class="n '+(v.holgura<0?'ro':'')+'">'+
+      (v.holgura<0?v.holgura:'+'+v.holgura)+' d</div><div class="l">margen Fase 0</div>'+
+      '<div class="d">'+(v.holgura<0?'no alcanza':'alcanza')+'</div></div>';
 }
 
-// ══════════════════════════════════════════════════════════
-//  GANTT
-// ══════════════════════════════════════════════════════════
-function pintaGantt(){
-  var h = '<table>';
+function pintaZoom(){
+  var h = '', v = veredictoFase('F0');
+  ZOOM.forEach(function(z){
+    var urg = (z.id==='mes' || z.id==='semanas') && v.holgura < 0;
+    h += '<button class="'+(zoomActual===z.id?'on':'')+(urg?' urgente':'')+'" onclick="cambiarZoom(\''+z.id+'\')">'+
+         z.nombre+'<span class="badge">'+z.sub+'</span></button>';
+  });
+  document.getElementById('zoom').innerHTML = h;
+}
 
-  // ── Cabecera de meses ──
-  h += '<thead><tr class="meses"><th class="col-nom">Fase / Tarea</th>';
-  var m = new Date(INICIO.getTime()); m.setDate(1);
-  while (m <= FIN){
-    var finMes = new Date(m.getFullYear(), m.getMonth()+1, 1);
-    var a = m < INICIO ? INICIO : m;
-    var b = finMes > FIN ? FIN : finMes;
-    var w = pct(dias(a,b));
-    var nom = ['ENE','FEB','MAR','ABR','MAY','JUN','JUL','AGO','SEP','OCT','NOV','DIC'][m.getMonth()];
-    var yr = String(m.getFullYear()).slice(2);
-    if (w > 0) h += '<th colspan="1" style="width:' + w + '%">' + nom + ' ' + yr + '</th>';
-    m = finMes;
+function cambiarZoom(id){ zoomActual = id; pintaZoom(); pintaEscala(); pintaGantt(); }
+
+function pintaEscala(){
+  var r = rangoZoom();
+  var ancho = Math.round(3 * FINDE * r.px);
+  var el = document.getElementById('escala');
+  if (zoomActual === 'todo'){
+    el.innerHTML = '⚠ <b>Vista aplastada:</b> '+r.px+' px por día. Una tarea de 3 días mide <b>'+ancho+
+      ' píxeles</b> — se ven puntos, no barras. Usá <b>1 mes</b> o <b>2 semanas</b> para trabajar.';
+  } else if (zoomActual === 'tres'){
+    el.innerHTML = '📐 Escala intermedia: <b>'+r.px+' px por día</b>. Una tarea de 3 días mide <b>'+ancho+
+      ' píxeles</b>. Sirve para el avance por fase, no para el detalle de cada tarea.';
+  } else {
+    el.innerHTML = '🔍 Escala de trabajo: <b>'+r.px+' px por día</b>. Una tarea de 3 días mide <b>'+ancho+
+      ' píxeles</b>. Acá se distingue cada tarea y se lee su duración.';
+  }
+}
+
+function pintaGantt(){
+  var r = rangoZoom();
+  var pxDia = r.px;
+  var anchoTotal = Math.round(r.dias * pxDia);
+  var h = '<table style="width:'+(290+anchoTotal)+'px">';
+
+  h += '<thead><tr><th class="col-nom">Fase / Tarea</th>';
+  if (pxDia < 25){
+    var m = new Date(r.ini.getTime());
+    while (m <= r.fin){
+      var fm = new Date(m.getFullYear(), m.getMonth()+1, 1);
+      var a = m < r.ini ? r.ini : m;
+      var b = fm > r.fin ? r.fin : fm;
+      var w = Math.round(Math.max(dias(a,b) * pxDia, 0));
+      if (w > 0){
+        var nom = ['ENE','FEB','MAR','ABR','MAY','JUN','JUL','AGO','SEP','OCT','NOV','DIC'][m.getMonth()];
+        h += '<th style="width:'+w+'px">'+nom+' '+String(m.getFullYear()).slice(2)+'</th>';
+      }
+      m = fm;
+    }
+  } else {
+    var d = new Date(r.ini.getTime()), sem = 1;
+    while (d <= r.fin){
+      var w2 = Math.round(Math.min(7, dias(d, r.fin)) * pxDia);
+      if (w2 > 0) h += '<th style="width:'+w2+'px">S'+sem+
+        '<br><span style="font-size:8.5px;opacity:.7">'+d.getDate()+'/'+(d.getMonth()+1)+'</span></th>';
+      d = sumaDias(d, 7); sem++;
+    }
   }
   h += '</tr></thead><tbody>';
 
-  // ── Filas por fase ──
-  for (var f in DATOS.meta.fases){
-    if (modoActual === 'fase0' && f !== 'F0') continue;
+  FASES.forEach(function(f){
     var fas = DATOS.meta.fases[f];
-    var ff = fechasFase(f);
-    var v = veredictoFase(f);
-    var e = esfuerzoFase(f);
-    var pctAv = e.total ? Math.round(e.hecho / e.total * 100) : 0;
-    var clF = v.holgura < 0 ? 'retraso' : (pctAv === 100 ? 'hecho' : (pctAv > 0 ? 'activo' : 'pend'));
+    var ini = fecha(fas.inicio), fin = fecha(fas.fin);
+    if (fin < r.ini || ini > r.fin) return;
 
-    var izq = pct(dias(INICIO, ff.ini));
-    var anc = pct(ff.dur);
+    var v = veredictoFase(f), e = esfuerzoFase(f);
+    var clF = (v.holgura < 0 && v.pct < 100) ? 'retraso' : (v.pct === 100 ? 'hecho' : (v.pct > 0 ? 'activo' : 'pend'));
+    var x0 = Math.round(Math.max(0, dias(r.ini, ini)) * pxDia);
+    var x1 = Math.round(Math.min(r.dias, dias(r.ini, fin)) * pxDia);
+    var ancho = Math.max(x1 - x0, 4);
 
-    h += '<tr class="fase">';
-    h += '<td class="col-nom" onclick="verFase(\'' + f + '\')">' +
-         '<div class="fn">' + f + ' · ' + fas.nombre + '</div>' +
-         '<div class="fs">hito ' + fas.hito + ' · ' + fas.semanas + ' sem · ' + pctAv + '%</div></td>';
-    h += '<td class="barra">';
-    h += '<div class="b fase ' + clF + '" style="left:' + izq + '%;width:' + anc + '%" ' +
-         'onclick="verFase(\'' + f + '\')" title="' + fas.nombre + '">';
-    if (pctAv > 0) h += '<div class="prog" style="width:' + pctAv + '%"></div>';
-    h += '<span style="position:relative">' + f + '</span></div>';
-    h += '<div class="hito" style="left:' + pct(dias(INICIO, ff.fin)) + '%" title="' + fas.hito + '"></div>';
+    h += '<tr class="fase"><td class="col-nom" onclick="verFase(\''+f+'\')">'+
+      '<div class="fn">'+f+' · '+fas.nombre+'</div>'+
+      '<div class="fs">hito '+fas.hito+' · '+fas.semanas+' sem · '+v.pct+'% · '+e.total+' días</div></td>'+
+      '<td class="barra" style="width:'+anchoTotal+'px">';
+    h += '<div class="b fase '+clF+'" style="left:'+x0+'px;width:'+ancho+'px" onclick="verFase(\''+f+'\')">';
+    if (v.pct > 0) h += '<div class="prog" style="width:'+v.pct+'%"></div>';
+    h += '<span class="etq">'+f+'</span></div>';
+    var xh = Math.round(dias(r.ini, fin) * pxDia);
+    if (xh >= 0 && xh <= anchoTotal)
+      h += '<div class="hito" style="left:'+xh+'px" title="'+fas.hito+'" onclick="verFase(\''+f+'\')"></div>';
     h += '</td></tr>';
 
-    // ── Tareas de la fase ──
-    if (verTareasOn){
-      for (var id in DATOS.tareas){
-        var t = DATOS.tareas[id];
-        if (t.fase !== f) continue;
-        var c = clasificar(id);
-        var pr = t.estado === 'hecho' ? 100 : (c === 'activo' ? 15 : 0);
-        // Posicion dentro de la fase segun dependencias
-        var pos = posTarea(id, f);
-        h += '<tr class="tar ' + (t.estado === 'hecho' ? 'hecho' : (t.estado === 'user' ? 'user' : '')) + '">';
-        h += '<td class="col-nom" onclick="verTarea(\'' + id + '\')">' +
-             '<span class="tid">' + id + '</span>' + t.nombre + '</td>';
-        h += '<td class="barra">';
-        h += '<div class="b ' + c + '" style="left:' + pr_izq(pos, f) + '%;width:' + pr_anc(t, f) + '%" ' +
-             'onclick="verTarea(\'' + id + '\')" title="' + t.nombre + '">';
-        if (pr > 0) h += '<div class="prog" style="width:' + pr + '%"></div>';
-        h += '</div></td></tr>';
+    var cursor = new Date(ini.getTime());
+    tareasDe(f).forEach(function(id){
+      var t = DATOS.tareas[id];
+      var c = clasificar(id);
+      var dur = Math.max(1, Math.round((t.dias || 1) * FINDE));
+      var bx0 = Math.round(dias(r.ini, cursor) * pxDia);
+      var bancho = Math.max(Math.round(dur * pxDia), 3);
+      var visible = (bx0 + bancho > 0) && (bx0 < anchoTotal);
+      if (bx0 < 0){ bancho += bx0; bx0 = 0; }
+      cursor = sumaDias(cursor, dur);
+
+      h += '<tr class="tar '+(t.estado==='hecho'?'hecho':(t.estado==='user'?'user':''))+'">';
+      h += '<td class="col-nom" onclick="verTarea(\''+id+'\')"><span class="tid">'+id+'</span>'+t.nombre+'</td>';
+      h += '<td class="barra" style="width:'+anchoTotal+'px">';
+      if (visible && bancho > 0){
+        h += '<div class="b '+c+'" style="left:'+bx0+'px;width:'+bancho+'px" onclick="verTarea(\''+id+'\')" title="'+
+             id+' · '+t.nombre+' ('+(t.dias||0)+' d)">';
+        if (pxDia >= 35 && bancho > 50) h += '<span class="etq">'+(t.dias||0)+' d</span>';
+        h += '</div>';
       }
-    }
-  }
+      h += '</td></tr>';
+    });
+  });
 
   h += '</tbody></table>';
 
-  // Linea de HOY superpuesta
-  var hh = '<div class="hoy" style="left:calc(230px + ' + pct(dias(INICIO, HOY)) + '% * (100% - 230px) / 100%)"></div>';
-  document.getElementById('gwrap').innerHTML = h;
+  var xhoy = Math.round(dias(r.ini, HOY) * pxDia);
+  var guia = (xhoy >= 0 && xhoy <= anchoTotal)
+    ? '<div class="hoylin" style="left:'+xhoy+'px"><span class="lb">HOY</span></div>' : '';
 
-  // Insertar la linea de hoy en cada fila es costoso: se pone una sola guia global
-  var gw = document.getElementById('gwrap');
-  var linea = document.createElement('div');
-  linea.style.cssText = 'position:absolute;top:0;bottom:0;width:2px;background:#fbbf24;z-index:2;pointer-events:none';
-  document.querySelector('.gantt').style.position = 'relative';
+  document.getElementById('gwrap').innerHTML =
+    '<div style="position:relative;display:inline-block">'+h+guia+'</div>';
 }
 
-// Posicion de una tarea dentro de su fase, segun orden de dependencia
-function posTarea(id, f){
-  var ids = Object.keys(DATOS.tareas).filter(function(k){ return DATOS.tareas[k].fase === f; });
-  return ids.indexOf(id) / Math.max(ids.length, 1);
-}
-function pr_izq(pos, f){
-  var ff = fechasFase(f);
-  var izqFase = pct(dias(INICIO, ff.ini));
-  return izqFase + pct(ff.dur) * pos * 0.92;
-}
-function pr_anc(t, f){
-  var ff = fechasFase(f);
-  var totalDias = esfuerzoFase(f).total || 1;
-  return Math.max(pct(ff.dur) * ((t.dias || 1) / totalDias) * 0.92, 0.45);
-}
-
-// ══════════════════════════════════════════════════════════
-//  DETALLE DE FASE
-// ══════════════════════════════════════════════════════════
 function verFase(f){
   var fas = DATOS.meta.fases[f];
-  var v = veredictoFase(f);
-  var e = esfuerzoFase(f);
-  var pctAv = e.total ? Math.round(e.hecho / e.total * 100) : 0;
+  var v = veredictoFase(f), e = esfuerzoFase(f);
+  var tareas = tareasDe(f), r = rangoZoom();
 
-  var lista = Object.keys(DATOS.tareas).filter(function(k){ return DATOS.tareas[k].fase === f; });
-
-  var h = '<div class="dh"><div style="flex:1"><h2>' + f + ' · ' + fas.nombre + '</h2>' +
-          '<p>Hito ' + fas.hito + ' · ' + fas.semanas + ' semanas · del ' + fas.inicio + ' al ' + fas.fin + '</p></div>' +
+  var h = '<div class="dh"><div style="flex:1"><h2>'+f+' · '+fas.nombre+'</h2>'+
+          '<p>Hito '+fas.hito+' · '+fas.semanas+' semanas · del '+fas.inicio+' al '+fas.fin+
+          ' · '+e.total+' días de trabajo en '+tareas.length+' tareas</p></div>'+
           '<button class="dx" onclick="cerrar()">✕</button></div>';
 
   h += '<div class="dg"><div>';
-  h += '<div class="bk ' + (v.holgura < 0 ? 'ro' : 'az') + '"><h3>¿Alcanza al hito?</h3>' +
-       '<div class="num ' + (v.holgura < 0 ? 'mal' : 'ok') + '">' +
-       (v.holgura < 0 ? v.holgura + ' días' : '+' + v.holgura + ' días') + '</div>' +
-       '<p style="margin-top:8px">Quedan <b>' + v.queda + ' días</b> de calendario y falta trabajar ' +
-       '<b>' + v.necesita + ' días</b> a 3-4 h por día, descontando fines de semana.<br><br>' +
-       (v.holgura < 0
-         ? 'No alcanza. Cada día que no avance aquí empuja todo lo que viene abajo.'
-         : 'Alcanza. Hay margen para un imprevisto de ' + v.holgura + ' días.') + '</p></div>';
+  h += '<div class="bk '+(v.holgura<0?'ro':'az')+'"><h3>¿Alcanza al hito?</h3>'+
+       '<div class="num '+(v.holgura<0?'mal':'ok')+'">'+
+       (v.holgura<0? v.holgura : '+'+v.holgura)+' días</div>'+
+       '<p style="margin-top:8px">Quedan <b>'+v.queda+' días</b> de calendario y falta trabajar <b>'+
+       v.necesita+' días</b> a 3-4 h por día, descontando fines de semana.<br><br>'+
+       (v.holgura<0 ? 'No alcanza. Cada día sin avanzar aquí empuja todo lo de abajo.'
+                    : 'Alcanza, con margen para un imprevisto de '+v.holgura+' días.')+'</p></div>';
   h += '</div><div>';
-
-  h += '<div class="bk"><h3>Esfuerzo</h3><p>' +
-       '<b>' + e.hecho + '</b> de <b>' + e.total + '</b> días de trabajo completados (' + pctAv + '%).<br>' +
-       'Quedan <b>' + e.resta + '</b> días de trabajo.</p>' +
-       '<div style="height:8px;background:#e2e8f0;border-radius:4px;margin-top:10px;overflow:hidden">' +
-       '<div style="height:100%;width:' + pctAv + '%;background:#059669"></div></div></div>';
-
-  h += '<div class="bk am" style="margin-top:13px"><h3>Tareas de esta fase</h3><p style="font-size:12.5px">' +
-       lista.length + ' tareas: ' +
-       lista.filter(function(k){ return DATOS.tareas[k].estado === 'hecho'; }).length + ' hechas, ' +
-       lista.filter(function(k){ return clasificar(k) === 'activo'; }).length + ' desbloqueadas, ' +
-       lista.filter(function(k){ return clasificar(k) === 'retraso'; }).length + ' urgentes.</p></div>';
-
+  h += '<div class="bk"><h3>Esfuerzo</h3><p><b>'+e.hecho+'</b> de <b>'+e.total+
+       '</b> días de trabajo completados ('+v.pct+'%).<br>Quedan <b>'+e.resta+'</b> días.</p>'+
+       '<div style="height:8px;background:#e2e8f0;border-radius:4px;margin-top:10px;overflow:hidden">'+
+       '<div style="height:100%;width:'+v.pct+'%;background:#059669"></div></div></div>';
   h += '</div></div>';
+
+  h += '<div class="bk" style="margin-top:12px"><h3>Tareas de la fase, con duración real</h3>'+
+       '<table class="tt"><tr><th>Tarea</th><th>Días</th><th>En pantalla</th><th>Estado</th></tr>';
+  tareas.forEach(function(id){
+    var t = DATOS.tareas[id], c = clasificar(id);
+    var col = {hecho:'#059669',activo:'#0284c7',retraso:'#dc2626',bloq:'#334155',user:'#b91c1c'}[c];
+    var nom = {hecho:'Hecha',activo:'Se puede trabajar',retraso:'Urgente',bloq:'Bloqueada',user:'Tu acción'}[c];
+    var px = Math.max(Math.round((t.dias||1)*FINDE*r.px), 3);
+    h += '<tr><td><span class="punto" style="background:'+col+'"></span>'+id+' · '+t.nombre+'</td>'+
+         '<td>'+(t.dias||0)+'</td><td style="color:#94a3b8">'+px+' px</td><td>'+nom+'</td></tr>';
+  });
+  h += '</table></div>';
 
   document.getElementById('detalle').innerHTML = h;
   document.getElementById('detalle').classList.add('show');
@@ -383,18 +392,18 @@ function verFase(f){
 }
 
 function verTarea(id){
-  var t = DATOS.tareas[id];
-  var c = clasificar(id);
-  var v = veredictoFase(t.fase);
-  var nom = {hecho:'COMPLETADA', activo:'SE PUEDE TRABAJAR', retraso:'URGENTE', bloq:'BLOQUEADA', user:'ESPERA TU ACCION'}[c];
+  var t = DATOS.tareas[id], c = clasificar(id);
+  var nom = {hecho:'COMPLETADA',activo:'SE PUEDE TRABAJAR',retraso:'URGENTE',bloq:'BLOQUEADA',user:'ESPERA TU ACCION'}[c];
+  var r = rangoZoom();
+  var px = Math.max(Math.round((t.dias||1)*FINDE*r.px), 3);
 
-  var h = '<div class="dh"><div style="flex:1"><h2>' + id + ' · ' + t.nombre + '</h2>' +
-          '<p>' + nom + ' · Fase ' + t.fase + ' · ' + (t.dias || 1) + ' día(s) de trabajo</p></div>' +
-          '<button class="dx" onclick="cerrar()">✕</button></div>';
-  h += '<div class="dg"><div><div class="bk az"><h3>Para qué sirve</h3><p>' + (t.porque || '') + '</p></div></div>';
-  h += '<div><div class="bk"><h3>Depende de</h3><p>' +
-       ((t.depende && t.depende.length) ? t.depende.join(', ') : 'Nada: puede empezar ya.') + '</p></div>';
-  if (t.entregable) h += '<div class="bk" style="margin-top:13px"><h3>Qué produce</h3><p>' + t.entregable + '</p></div>';
+  var h = '<div class="dh"><div style="flex:1"><h2>'+id+' · '+t.nombre+'</h2>'+
+          '<p>'+nom+' · Fase '+t.fase+' · '+(t.dias||0)+' día(s) de trabajo · '+px+
+          ' px en la escala actual</p></div><button class="dx" onclick="cerrar()">✕</button></div>';
+  h += '<div class="dg"><div><div class="bk az"><h3>Para qué sirve</h3><p>'+(t.porque||'')+'</p></div></div>';
+  h += '<div><div class="bk"><h3>Depende de</h3><p>'+
+       ((t.depende&&t.depende.length)? t.depende.join(', ') : 'Nada: puede empezar ya.')+'</p></div>';
+  if (t.entregable) h += '<div class="bk" style="margin-top:12px"><h3>Qué produce</h3><p>'+t.entregable+'</p></div>';
   h += '</div></div>';
 
   document.getElementById('detalle').innerHTML = h;
@@ -403,34 +412,11 @@ function verTarea(id){
 
 function cerrar(){ document.getElementById('detalle').classList.remove('show'); }
 
-// ══════════════════════════════════════════════════════════
-//  CONTROLES
-// ══════════════════════════════════════════════════════════
-function modo(m, btn){
-  modoActual = m;
-  document.querySelectorAll('.ctrl button').forEach(function(b){ if(b.textContent.indexOf('Fase')<0 && b.textContent.indexOf('tareas')<0 && b.textContent.indexOf('hoy')<0) b.classList.remove('on'); });
-  btn.classList.add('on');
-  pintaGantt();
-}
-
-function verTareas(btn){
-  verTareasOn = !verTareasOn;
-  btn.classList.toggle('on', verTareasOn);
-  btn.textContent = verTareasOn ? 'Ocultar tareas' : 'Mostrar tareas';
-  pintaGantt();
-}
-
-function irHoy(){
-  var gw = document.getElementById('gwrap');
-  var objetivo = 230 + (gw.scrollWidth - 230) * (pct(dias(INICIO, HOY)) / 100);
-  gw.scrollTo({left: Math.max(0, objetivo - gw.clientWidth / 2), behavior:'smooth'});
-}
-
-// ══════════════════════════════════════════════════════════
 document.getElementById('fhoy').textContent = DATOS.meta.hoy;
+pintaZoom();
 pintaResumen();
+pintaEscala();
 pintaGantt();
 </script>
-
 </body>
 </html>
