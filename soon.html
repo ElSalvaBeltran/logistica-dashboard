@@ -3,111 +3,894 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SOON — Documentación del Proyecto</title>
+<title>SOON — Arquitectura y Cronograma</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:'Segoe UI',system-ui,sans-serif;background:#0A192F;color:#e2e8f0;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px}
-.wrap{max-width:820px;width:100%}
-.logo{display:flex;align-items:center;gap:14px;margin-bottom:8px}
-.logo .mark{width:52px;height:52px;border-radius:14px;background:linear-gradient(135deg,#007BFF,#FF5722);display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:800;color:#fff}
-.logo h1{font-size:30px;font-weight:700;letter-spacing:-.5px}
-.sub{color:#94a3b8;font-size:15px;margin-bottom:32px;margin-left:66px}
-h2{font-size:13px;text-transform:uppercase;letter-spacing:1.5px;color:#64748b;margin:28px 0 12px;font-weight:600}
-.card{background:#132241;border:1px solid #1e3a5f;border-radius:14px;padding:22px;margin-bottom:14px;text-decoration:none;color:inherit;display:block;transition:all .2s}
-.card:hover{border-color:#007BFF;transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,123,255,.15)}
-.card .top{display:flex;align-items:center;gap:12px;margin-bottom:8px;flex-wrap:wrap}
-.card .badge{padding:3px 10px;border-radius:20px;font-size:11px;font-weight:700;letter-spacing:.3px}
-.b-new{background:#FF5722;color:#fff}
-.b-cur{background:#1F4E5F;color:#52D8A1}
-.card h3{font-size:18px;font-weight:600;flex:1}
-.card p{color:#94a3b8;font-size:14px;line-height:1.6}
-.card .meta{margin-top:12px;font-size:12px;color:#64748b;display:flex;gap:16px;flex-wrap:wrap}
-.foot{margin-top:36px;padding-top:20px;border-top:1px solid #1e3a5f;font-size:12px;color:#64748b;text-align:center;line-height:1.8}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:#0A192F;color:#e2e8f0;line-height:1.5}
+.wrap{max-width:1500px;margin:0 auto;padding:20px}
+
+.head{text-align:center;margin-bottom:18px}
+.head h1{font-size:23px;font-weight:700;color:#fff}
+.head p{color:#94a3b8;font-size:12.5px;margin-top:4px}
+
+/* ══ PESTAÑAS ══ */
+.tabs{display:flex;justify-content:center;gap:8px;margin-bottom:18px;flex-wrap:wrap}
+.tabs button{background:#132241;border:2px solid #1e3a5f;color:#cbd5e1;padding:11px 26px;border-radius:11px;cursor:pointer;font-size:14px;font-family:inherit;font-weight:600;transition:all .15s}
+.tabs button:hover{border-color:#007BFF;color:#fff}
+.tabs button.on{background:#007BFF;border-color:#007BFF;color:#fff;box-shadow:0 4px 16px rgba(0,123,255,.3)}
+.tabs button .sub{display:block;font-size:10.5px;opacity:.75;font-weight:500;margin-top:2px}
+.panel{display:none}
+.panel.on{display:block}
+
+/* ══ RESUMEN ══ */
+.barra{display:grid;grid-template-columns:repeat(auto-fit,minmax(135px,1fr));gap:10px;margin-bottom:16px}
+.rc{background:#0f1d33;border:1px solid #1e3a5f;border-radius:11px;padding:12px 14px}
+.rc .n{font-size:21px;font-weight:700;color:#52D8A1;line-height:1.1}
+.rc .n.ro{color:#ef4444}.rc .n.az{color:#38bdf8}.rc .n.am{color:#f59e0b}
+.rc .l{font-size:10px;color:#64748b;text-transform:uppercase;letter-spacing:.6px;margin-top:3px}
+.rc .d{font-size:11px;color:#94a3b8;margin-top:4px}
+
+/* ══ ALERTAS ══ */
+.alertas{background:#1a0f0f;border:1px solid #7f1d1d;border-radius:13px;padding:15px 18px;margin-bottom:16px}
+.alertas h3{font-size:12px;text-transform:uppercase;letter-spacing:.8px;color:#fca5a5;margin-bottom:9px;font-weight:700}
+.alertas .al{display:flex;align-items:flex-start;gap:9px;font-size:13px;color:#fecaca;padding:6px 0;border-bottom:1px solid rgba(239,68,68,.15)}
+.alertas .al:last-child{border:none}
+.alertas .al b{color:#fff}
+.alertas .al .tipo{font-size:10px;padding:2px 7px;border-radius:5px;font-weight:700;flex-shrink:0;margin-top:2px}
+.alertas .al .tipo.r{background:#ef4444;color:#fff}
+.alertas .al .tipo.w{background:#f59e0b;color:#3b2503}
+.alertas .al .tipo.a{background:#38bdf8;color:#04283d}
+
+.leyenda{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-bottom:16px;font-size:11.5px}
+.leyenda span{display:flex;align-items:center;gap:5px;color:#94a3b8}
+.leyenda .d{width:13px;height:9px;border-radius:3px}
+
+/* ══ PFD (arquitectura) ══ */
+.pfd{background:#0f1d33;border:1px solid #1e3a5f;border-radius:16px;padding:24px 18px;margin-bottom:16px}
+.nivel{display:flex;justify-content:center;align-items:center;flex-wrap:wrap;gap:10px}
+.caja{background:#132241;border:2px solid #1e3a5f;border-radius:12px;padding:12px 17px;cursor:pointer;transition:all .18s;text-align:center;position:relative;min-width:128px}
+.caja:hover{border-color:#007BFF;transform:translateY(-2px);box-shadow:0 6px 20px rgba(0,123,255,.2)}
+.caja.sel{border-color:#007BFF;background:#16305a;box-shadow:0 0 0 3px rgba(0,123,255,.2)}
+.caja.hecho{border-color:#059669;background:#0d2e24}
+.caja.pend{border-color:#334155}
+.caja.user{border-color:#dc2626;background:#2e1414}
+.caja.activo{border-color:#38bdf8;background:#0c2942}
+.caja.activo::after{content:'';position:absolute;inset:-7px;border-radius:18px;border:2px solid #38bdf8;animation:pulso 1.8s ease-out infinite;pointer-events:none}
+@keyframes pulso{0%{opacity:.9;transform:scale(1)}70%{opacity:0;transform:scale(1.09)}100%{opacity:0;transform:scale(1.09)}}
+.caja.activo .nm{color:#7dd3fc}
+.caja.retraso{border-color:#ef4444;background:#3b1212}
+.caja.retraso::after{content:'';position:absolute;inset:-6px;border-radius:17px;border:2px solid #ef4444;animation:alarma 1.1s ease-in-out infinite;pointer-events:none}
+@keyframes alarma{0%,100%{opacity:.35;box-shadow:0 0 0 0 rgba(239,68,68,.5)}50%{opacity:1;box-shadow:0 0 22px 3px rgba(239,68,68,.45)}}
+.caja.retraso .nm{color:#fca5a5}
+.caja.riesgo{border-color:#f59e0b;border-style:dashed}
+.caja .ic{font-size:21px;display:block;margin-bottom:3px}
+.caja .nm{font-size:12.5px;font-weight:700;color:#fff;display:block}
+.caja .sub2{font-size:10px;color:#94a3b8;display:block;margin-top:2px}
+.caja .cnt{font-size:10px;margin-top:4px;padding:2px 7px;border-radius:8px;display:inline-block;background:rgba(255,255,255,.08);color:#cbd5e1}
+.caja .pt{position:absolute;top:-7px;right:-7px;width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#fff;border:2px solid #0f1d33}
+.pt-h{background:#059669}.pt-c{background:#38bdf8}.pt-p{background:#475569}.pt-u{background:#dc2626}
+.caja .aviso{position:absolute;top:-11px;left:50%;transform:translateX(-50%);font-size:9.5px;font-weight:700;padding:2px 8px;border-radius:6px;white-space:nowrap;z-index:2}
+.aviso-a{background:#38bdf8;color:#04283d}
+.aviso-r{background:#ef4444;color:#fff}
+.aviso-w{background:#f59e0b;color:#3b2503}
+.flecha{text-align:center;color:#475569;font-size:17px;margin:6px 0;line-height:1}
+.flecha-lbl{font-size:10px;color:#64748b;display:block;margin-top:-2px}
+.ramas{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:11px;margin:9px 0;position:relative}
+.ramas::before{content:'';position:absolute;top:-9px;left:8%;right:8%;height:2px;background:#334155}
+.ramas .rama-item{display:flex;flex-direction:column;align-items:center}
+.ramas .rama-item::before{content:'';width:2px;height:9px;background:#334155}
+.adapt{text-align:center;color:#475569;font-size:11px;margin-top:18px;padding-top:13px;border-top:1px dashed #1e3a5f}
+.chips{display:flex;flex-wrap:wrap;gap:5px;margin-top:4px}
+.chips.c{justify-content:center}
+.chip{font-size:11px;padding:3px 9px;border-radius:6px;background:#eff6ff;color:#1e40af;font-weight:600;cursor:pointer}
+.chip.datos{background:#f0fdf4;color:#166534}
+.chip.ext{background:#fef3c7;color:#92400e}
+.chip.dom{background:#f3e8ff;color:#6b21a8}
+.chip:hover{filter:brightness(.94)}
+.ayuda{text-align:center;color:#64748b;font-size:12.5px;padding:15px;border:1px dashed #334155;border-radius:12px;margin-bottom:16px}
+.ayuda b{color:#94a3b8}
+
+/* ══ DETALLE DE NODO ══ */
+.detalle{background:#fff;color:#1e293b;border-radius:16px;padding:22px;display:none;animation:ap .22s ease;margin-bottom:16px}
+.detalle.show{display:block}
+@keyframes ap{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}
+.det-head{display:flex;align-items:flex-start;gap:13px;margin-bottom:16px;padding-bottom:14px;border-bottom:2px solid #e2e8f0}
+.det-ico{font-size:32px;line-height:1}
+.det-tit{flex:1}
+.det-tit h2{font-size:19px;font-weight:700;color:#0f172a;margin-bottom:3px}
+.det-tit p{font-size:13px;color:#64748b}
+.det-cerrar{background:#f1f5f9;border:none;width:29px;height:29px;border-radius:50%;cursor:pointer;font-size:14px;color:#64748b;font-weight:700}
+.det-cerrar:hover{background:#e2e8f0}
+.det-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:760px){.det-grid{grid-template-columns:1fr}}
+.bloque{background:#f8fafc;border-radius:11px;padding:14px}
+.bloque h3{font-size:11.5px;text-transform:uppercase;letter-spacing:.8px;color:#64748b;margin-bottom:8px;font-weight:700}
+.bloque.porque{border-left:4px solid #007BFF}
+.bloque.porque p{font-size:13.5px;color:#334155;line-height:1.6}
+.bloque.azul{background:#eff6ff}.bloque.azul h3{color:#1e40af}
+.bloque.amarillo{background:#fef3c7}.bloque.amarillo h3{color:#92400e}
+.bloque.rojo{background:#fee2e2}.bloque.rojo h3{color:#991b1b}
+.bloque.azul p,.bloque.amarillo p,.bloque.rojo p{font-size:12.5px;line-height:1.6}
+.tlist{display:flex;flex-direction:column;gap:5px}
+.trow{display:flex;align-items:center;gap:9px;font-size:12.5px;color:#475569;padding:6px 8px;border-radius:7px;cursor:pointer;transition:background .15s;border:1px solid transparent}
+.trow:hover{background:#e0f2fe;border-color:#7dd3fc}
+.trow .bx{width:15px;height:15px;border-radius:4px;border:2px solid #cbd5e1;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:9px;color:#fff}
+.trow.ok .bx{background:#059669;border-color:#059669}
+.trow.ok{color:#065f46}
+.trow.usr .bx{background:#dc2626;border-color:#dc2626}
+.trow.usr{color:#991b1b}
+.trow .id{font-family:'Courier New',monospace;font-size:10.5px;color:#94a3b8;min-width:44px;flex-shrink:0}
+.trow .nm{flex:1}
+.trow .go{color:#94a3b8;font-size:11px;opacity:.6}
+.trow:hover .go{opacity:1;color:#0284c7}
+.prueba{background:#0A192F;border-radius:11px;padding:14px;margin-top:14px;color:#e2e8f0;font-size:12.5px}
+.prueba b{color:#52D8A1;display:block;margin-bottom:6px;font-size:13px}
+.prueba ul{margin:6px 0 0 17px;color:#cbd5e1}
+.prueba li{margin-bottom:4px}
+.prueba .nota{margin-top:8px;color:#94a3b8;font-size:11.5px;font-style:italic}
+
+/* ══ GANTT ══ */
+.zoom{display:flex;justify-content:center;gap:7px;flex-wrap:wrap;margin-bottom:14px}
+.zoom button{background:#132241;border:1px solid #1e3a5f;color:#cbd5e1;padding:9px 16px;border-radius:9px;cursor:pointer;font-size:12.5px;font-family:inherit;font-weight:600;transition:all .15s}
+.zoom button:hover{border-color:#007BFF;color:#fff}
+.zoom button.on{background:#007BFF;border-color:#007BFF;color:#fff}
+.zoom button .badge{font-size:9.5px;opacity:.75;display:block;margin-top:2px;font-weight:500}
+.zoom button.urgente:not(.on){border-color:#ef4444;color:#fca5a1}
+.escala{background:#0f1d33;border:1px solid #1e3a5f;border-left:4px solid #38bdf8;border-radius:11px;padding:13px 16px;margin-bottom:14px;font-size:12.5px;color:#94a3b8}
+.escala b{color:#7dd3fc}
+.gantt{background:#0f1d33;border:1px solid #1e3a5f;border-radius:14px;overflow:hidden}
+.gwrap{overflow-x:auto}
+table.g{border-collapse:collapse}
+table.g th,table.g td{padding:0;font-size:12.5px}
+table.g .col-nom{position:sticky;left:0;background:#0f1d33;z-index:3;border-right:2px solid #1e3a5f;width:290px;min-width:290px;text-align:left;padding:8px 12px}
+table.g thead th{background:#0c1829;color:#94a3b8;font-weight:700;font-size:10px;text-transform:uppercase;letter-spacing:.6px;padding:9px 6px;border-bottom:2px solid #1e3a5f;text-align:center}
+table.g thead th.col-nom{text-align:left;z-index:5}
+table.g tr.fase{background:#12203a}
+table.g tr.fase td{border-bottom:2px solid #1e3a5f;padding:10px 0}
+table.g tr.fase .fn{font-weight:700;color:#fff;font-size:13.5px}
+table.g tr.fase .fs{font-size:10.5px;color:#64748b;margin-top:2px}
+table.g tr.fase .col-nom{cursor:pointer}
+table.g tr.fase .col-nom:hover{background:#16305a}
+table.g tr.tar td{border-bottom:1px solid #16263f;padding:7px 0}
+table.g tr.tar:hover td{background:#12203a}
+table.g tr.tar .col-nom{padding-left:24px;font-size:12.5px;color:#94a3b8;cursor:pointer}
+table.g tr.tar .col-nom:hover{background:#16305a}
+table.g tr.tar .tid{font-family:'Courier New',monospace;font-size:10.5px;color:#64748b;margin-right:6px}
+table.g tr.tar.hecho .col-nom{color:#52D8A1}
+table.g tr.tar.user .col-nom{color:#fca5a5}
+td.barra{position:relative;height:30px;padding:0}
+.b{position:absolute;height:18px;top:50%;transform:translateY(-50%);border-radius:5px;cursor:pointer;transition:filter .15s,box-shadow .15s;min-width:3px}
+.b:hover{filter:brightness(1.3);box-shadow:0 0 12px rgba(255,255,255,.3);z-index:6}
+.b .etq{position:absolute;left:6px;top:50%;transform:translateY(-50%);font-size:9.5px;color:#fff;font-weight:600;white-space:nowrap;pointer-events:none;text-shadow:0 1px 2px rgba(0,0,0,.6)}
+.b.fase{height:24px;border-radius:6px}
+.b .prog{position:absolute;left:0;top:0;bottom:0;background:rgba(255,255,255,.3);border-radius:5px}
+.b.hecho{background:linear-gradient(90deg,#059669,#10b981)}
+.b.activo{background:linear-gradient(90deg,#0284c7,#38bdf8)}
+.b.retraso{background:linear-gradient(90deg,#dc2626,#ef4444)}
+.b.bloqueada{background:#334155}
+.b.pend{background:#475569}
+.b.user{background:linear-gradient(90deg,#b91c1c,#ef4444)}
+.hoylin{position:absolute;top:0;bottom:0;width:2px;background:#fbbf24;z-index:2;pointer-events:none}
+.hoylin .lb{position:absolute;top:2px;left:4px;font-size:9px;color:#fbbf24;font-weight:700;white-space:nowrap}
+.hito{position:absolute;top:50%;transform:translate(-50%,-50%) rotate(45deg);width:14px;height:14px;background:#fbbf24;border:2px solid #0f1d33;z-index:3;cursor:pointer}
+
+/* ══ FICHA DE TAREA (compartida) ══ */
+.ficha-wrap{background:#fff;color:#1e293b;border-radius:16px;overflow:hidden;margin:16px 0;border:3px solid #0284c7;animation:ap .22s ease}
+.fh{background:linear-gradient(135deg,#0A192F,#16305A);padding:20px 22px;color:#fff}
+.fh-volver{background:rgba(255,255,255,.14);border:none;color:#cbd5e1;padding:6px 13px;border-radius:8px;cursor:pointer;font-size:11.5px;font-family:inherit;font-weight:600;margin-bottom:12px}
+.fh-volver:hover{background:rgba(255,255,255,.26);color:#fff}
+.fh-cod{font-family:'Courier New',monospace;font-size:12px;color:#7dd3fc;font-weight:700;letter-spacing:.6px}
+.fh h2{font-size:19px;font-weight:700;margin:5px 0 10px;line-height:1.35}
+.fh-meta{display:flex;gap:7px;flex-wrap:wrap}
+.fh-tag{font-size:10.5px;padding:3px 9px;border-radius:6px;background:rgba(255,255,255,.14);color:#cbd5e1;font-weight:600}
+.fh-tag.ok,.fh-tag.est-hecho{background:#059669;color:#fff}
+.fh-tag.est-activo{background:#0284c7;color:#fff}
+.fh-tag.est-retraso{background:#dc2626;color:#fff}
+.fh-tag.est-bloqueada{background:#334155;color:#cbd5e1}
+.fh-tag.est-user{background:#b91c1c;color:#fff}
+.fb{padding:20px 22px}
+.fbloque{background:#f8fafc;border-radius:11px;padding:14px;margin-bottom:12px}
+.fbloque:last-child{margin-bottom:0}
+.fbloque h3{font-size:11px;text-transform:uppercase;letter-spacing:.8px;color:#64748b;margin-bottom:8px;font-weight:700}
+.fbloque p{font-size:13.5px;color:#334155;line-height:1.65;margin:0}
+.fbloque.azul{border-left:4px solid #007BFF}
+.fbloque.amarillo{background:#fef3c7}.fbloque.amarillo h3{color:#92400e}
+.fbloque.rojo{background:#fee2e2}.fbloque.rojo h3{color:#991b1b}
+.f2col{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:720px){.f2col{grid-template-columns:1fr}}
+.fchip{display:inline-block;font-size:11.5px;padding:4px 10px;border-radius:7px;background:#eff6ff;color:#1e40af;font-weight:600;cursor:pointer;margin:2px 3px 2px 0;transition:filter .15s}
+.fchip:hover{filter:brightness(.93)}
+.fchip.ok{background:#f0fdf4;color:#166534}
+.fchip.pend{background:#fef3c7;color:#92400e}
+.fchip.dom{background:#f3e8ff;color:#6b21a8}
+.fbarra{height:8px;background:#e2e8f0;border-radius:4px;margin-top:10px;overflow:hidden}
+.fbarra div{height:100%;background:#059669}
+.fmini{font-size:11.5px;color:#64748b;margin-top:6px !important}
+
+.foot{text-align:center;color:#64748b;font-size:11px;margin-top:22px;padding-top:14px;border-top:1px solid #1e3a5f}
 </style>
 </head>
 <body>
 <div class="wrap">
 
-  <div class="logo">
-    <div class="mark">S</div>
-    <h1>SOON</h1>
+  <div class="head">
+    <h1>SOON — Arquitectura y Cronograma</h1>
+    <p id="subtitulo">Haz clic en cualquier nodo o tarea para ver su ficha completa</p>
   </div>
-  <div class="sub">Marketplace B2B de transporte de carga · Bolivia</div>
 
-  <h2>Seguimiento del desarrollo</h2>
+  <div class="tabs">
+    <button id="tab-arq" class="on" onclick="pestana('arq')">🗺️ Arquitectura<span class="sub">19 nodos del sistema</span></button>
+    <button id="tab-gan" onclick="pestana('gan')">📅 Cronograma<span class="sub">28 semanas · 8 fases</span></button>
+  </div>
 
-  <a class="card" href="arquitectura.html">
-    <div class="top">
-      <span class="badge b-new">NUEVO</span>
-      <h3>Arquitectura del sistema</h3>
-    </div>
-    <p>
-      Diagrama del sistema con nodos clicables. Muestra qué se está trabajando ahora,
-      qué está atrasado y qué depende de qué. Cada tarea abre su ficha con la razón de ser.
-    </p>
-    <div class="meta">
-      <span>🗺️ 19 nodos</span>
-      <span>📋 74 tareas con ficha</span>
-      <span>⚡ Aura de estado en vivo</span>
-    </div>
-  </a>
+  <div class="barra" id="barra"></div>
+  <div class="alertas" id="alertas"></div>
 
-  <a class="card" href="gantt.html">
-    <div class="top">
-      <span class="badge b-new">NUEVO</span>
-      <h3>Diagrama de Gantt</h3>
+  <!-- ══ PANEL ARQUITECTURA ══ -->
+  <div class="panel on" id="panel-arq">
+    <div class="leyenda">
+      <span><span class="d" style="background:#38bdf8"></span> Trabajando ahora</span>
+      <span><span class="d" style="background:#ef4444"></span> Atrasado</span>
+      <span><span class="d" style="background:#f59e0b"></span> En riesgo</span>
+      <span><span class="d" style="background:#059669"></span> Hecho</span>
+      <span><span class="d" style="background:#dc2626"></span> Acción del usuario</span>
+      <span><span class="d" style="background:#475569"></span> Pendiente</span>
     </div>
-    <p>
-      Las 28 semanas del proyecto en una línea de tiempo, con las 8 fases, sus hitos
-      y el cálculo honesto de si cada fase alcanza a llegar.
-    </p>
-    <div class="meta">
-      <span>📅 28 semanas</span>
-      <span>◆ 8 hitos</span>
-      <span>🔴 Fase 0 en déficit</span>
-    </div>
-  </a>
+    <div class="pfd" id="pfd"></div>
+    <div class="ayuda" id="ayuda">👆 <b>Haz clic en cualquier nodo</b> para ver por qué existe y sus tareas</div>
+    <div id="detalles"></div>
+  </div>
 
-  <h2>Documentación del proyecto</h2>
+  <!-- ══ PANEL GANTT ══ -->
+  <div class="panel" id="panel-gan">
+    <div class="zoom" id="zoom"></div>
+    <div class="escala" id="escala"></div>
+    <div class="gantt"><div class="gwrap" id="gwrap"></div></div>
+    <div class="leyenda" style="margin-top:14px">
+      <span><span class="d" style="background:linear-gradient(90deg,#059669,#10b981)"></span> Hecho</span>
+      <span><span class="d" style="background:linear-gradient(90deg,#0284c7,#38bdf8)"></span> Se puede trabajar</span>
+      <span><span class="d" style="background:linear-gradient(90deg,#dc2626,#ef4444)"></span> Urgente</span>
+      <span><span class="d" style="background:#475569"></span> Pendiente</span>
+      <span><span class="d" style="background:#334155"></span> Bloqueado</span>
+      <span><span style="color:#fbbf24">◆</span> Hito</span>
+      <span><span style="color:#fbbf24">│</span> Hoy</span>
+    </div>
+  </div>
 
-  <a class="card" href="soon-v2.html">
-    <div class="top">
-      <span class="badge b-cur">ANTERIOR</span>
-      <h3>Dashboard v2 — Septiembre 2026</h3>
-    </div>
-    <p>
-      Estado del proyecto con las decisiones de arquitectura congeladas.
-      Incluye el cronograma completo de desarrollo, el diseño offline-first y el análisis de riesgos.
-    </p>
-    <div class="meta">
-      <span>💼 Parte Comercial + 🔧 Parte Técnica</span>
-      <span>12 secciones</span>
-      <span>28 semanas</span>
-    </div>
-  </a>
-
-  <a class="card" href="index.html">
-    <div class="top">
-      <span class="badge b-cur">ANÁLISIS BASE</span>
-      <h3>Dashboard v1 — Agosto 2026</h3>
-    </div>
-    <p>
-      Análisis de mercado, competencia, modelo de negocio y proyección financiera.
-      Documento base del estudio de oportunidad.
-    </p>
-    <div class="meta">
-      <span>📈 Oportunidad de mercado</span>
-      <span>🏆 Análisis competitivo</span>
-      <span>💵 Proyección financiera</span>
-    </div>
-  </a>
+  <!-- La ficha de tarea se pinta aqui, en cualquier pestana -->
+  <div id="ficha-zona"></div>
 
   <div class="foot">
-    SOON · nombre técnico y de producto<br>
-    «SOON LT» solo para comunicación corporativa<br>
-    Documento confidencial · 2026
+    SOON · Arquitectura y cronograma desde E-RL-004 · <span id="fhoy"></span><br>
+    Un solo archivo de datos alimenta las dos pestañas y sus fichas
   </div>
 
 </div>
+
+<script>
+/*__DATOS_INICIO__*/var DATOS = {"meta":{"proyecto":"SOON","version":"1.0","fecha":"2026-09-18","fuente":"E-RL-004-SLT cronograma nivel 3 v1.1","total_tareas":92,"completadas":5,"hoy":"2026-09-18","fases":{"F0":{"nombre":"Definicion y base","semanas":4,"inicio":"2026-09-22","fin":"2026-10-16","hito":"M1","tareas":18},"F1":{"nombre":"Identidad","semanas":3,"inicio":"2026-10-19","fin":"2026-11-06","hito":"M2","tareas":12},"F2":{"nombre":"Marketplace","semanas":4,"inicio":"2026-11-09","fin":"2026-12-04","hito":"M3","tareas":14},"F3":{"nombre":"Ejecucion","semanas":5,"inicio":"2026-12-07","fin":"2027-01-08","hito":"M4","tareas":16},"F4":{"nombre":"Pagos y admin","semanas":3,"inicio":"2027-01-11","fin":"2027-01-29","hito":"M5","tareas":10},"F5":{"nombre":"Beta Android","semanas":3,"inicio":"2027-02-01","fin":"2027-02-19","hito":"M6","tareas":8},"F6":{"nombre":"Piloto Android","semanas":2,"inicio":"2027-02-22","fin":"2027-03-05","hito":"M7","tareas":6},"F7":{"nombre":"iOS","semanas":4,"inicio":"2027-03-08","fin":"2027-04-02","hito":"M8","tareas":8}},"actualizado":"2026-09-18"},"nodos":[{"id":"api","nombre":"API /api/v1","sub":"NestJS + Fastify · monolito modular","icono":"⚙️","capa":"nucleo","estado":"hecho","porque":"Es el pegamento del sistema: conecta la app móvil con la base de datos, los servicios externos y el dominio compartido. Se eligió monolito modular en vez de 9 microservicios porque una sola persona no puede operar 9 servicios: da la misma separación de responsabilidades sin la complejidad operativa.","conecta":["App móvil","PostgreSQL + PostGIS","Máquina de Estados","Contratos","Panel Admin"],"tareas":["F0-01","F0-02","F0-03","F0-04","F0-05","F0-06","F0-15"],"prueba":{"titulo":"Probado el 18 de septiembre de 2026","items":["Turborepo compiló los 3 paquetes en orden de dependencia en 8,79 s sin errores","El servidor arrancó en menos de 1 s y respondió en localhost:3000/api/v1","Los 5 endpoints responden HTTP 200","El CI quedó configurado con 3 jobs: verificación, auditoría de seguridad, prueba de arranque"]}},{"id":"viajes","nombre":"Viajes","sub":"dominio central del negocio","icono":"🚚","capa":"modulo","estado":"hecho","porque":"El viaje es el corazón de SOON: es lo que se publica, se oferta, se adjudica, se ejecuta y se liquida. Todo el negocio gira alrededor de esta entidad. Si no funciona el viaje, no hay producto.","conecta":["Máquina de Estados","PostgreSQL + PostGIS","Geo"],"tareas":["F2-01","F2-02","F2-03","F2-04","F2-05","F2-06","F2-08","F2-10","F2-11","F2-12"],"prueba":{"titulo":"Probado el 18 de septiembre de 2026","items":["5 endpoints funcionando: listar, buscar por id, resumen, transiciones y cambio de estado","El resumen calcula la comisión: Bs 2.670 sobre Bs 26.700","Cambio de estado exitoso: el viaje #2 pasó de adjudicado a en_transito","Ruta inválida devuelve HTTP 404 correctamente"]}},{"id":"fsm","nombre":"Máquina de Estados","sub":"@soon/domain · corre en servidor Y en celular","icono":"🔄","capa":"dominio","estado":"hecho","porque":"Las rutas Bolivia→Brasil tienen tramos de horas sin señal. Si el servidor fuera la única fuente de verdad, el viaje se detendría justo donde más importa. Al vivir en un paquete compartido (@soon/domain), la misma máquina corre en el celular del chofer y en el servidor: el chofer puede avanzar el estado sin conexión, y cuando recupera señal sincroniza.","conecta":["API /api/v1","App móvil","Offline-first"],"tareas":["F3-01","F3-02","F3-03","F3-04"],"prueba":{"titulo":"La prueba más importante del 18 de septiembre de 2026","items":["Chofer sobre viaje publicado devolvió 0 transiciones — correcto: todavía no puede actuar","Chofer sobre viaje adjudicado devolvió 1 transición: en_transito","Chofer intentó liquidado desde en_transito y el sistema lo RECHAZÓ con HTTP 400"],"nota":"La regla vive en el dominio compartido, no en el controlador. Por eso puede ejecutarse igual en el dispositivo del chofer."}},{"id":"offline","nombre":"Offline-first","sub":"outbox + idempotencia + conflictos","icono":"📴","capa":"dominio","estado":"curso","porque":"Sin esto, el chofer en zona sin señal no puede cambiar estados, ni registrar incidencias, ni tomar el POD: el viaje se congela. Una cola de GPS sola no alcanza. Lo que hay que resolver es qué pasa cuando dos actores modifican el mismo viaje sin conexión. Regla: el admin gana en estados administrativos, el chofer en los operativos de su viaje, y todo conflicto se registra en auditoría.","conecta":["Máquina de Estados","PostgreSQL + PostGIS","Tracking"],"tareas":["F3-05","F3-06","F3-07","F3-08","F3-09","F0-12"],"prueba":{"titulo":"Idempotencia ya probada el 18 de septiembre de 2026","items":["Se envió dos veces la misma transición con el mismo clientTransitionId","La segunda NO duplicó la operación"],"nota":"Eso significa que el chofer sin señal puede reintentar sin miedo a duplicar el cambio de estado."}},{"id":"auth","nombre":"Auth","sub":"OTP + permisos + multiempresa","icono":"🔐","capa":"modulo","estado":"pend","porque":"Sin autenticación no se sabe quién es quién. Y sin control de permisos, un transportista podría ver datos de otro. El aislamiento multiempresa es uno de los 3 riesgos más graves identificados en la revisión de arquitectura.","conecta":["Todos los módulos","App móvil","Panel Admin"],"tareas":["F1-01","F1-02","F1-03","F1-04","F1-05","F1-06","F1-07"],"extra":{"titulo":"Decisión tomada sobre el OTP","texto":"OTP por email primero (casi gratis), WhatsApp después, SMS último. El SMS a Bolivia cuesta US$0,2215 por segmento. Con 500 transportistas serían unos US$220 al mes: más que todo el presupuesto de infraestructura del piloto.","color":"azul"}},{"id":"tracking","nombre":"Tracking","sub":"GPS tiempo real · offline-capaz","icono":"📡","capa":"modulo","estado":"pend","porque":"La trazabilidad es la propuesta de valor frente a los transportistas tradicionales que operan por WhatsApp y llamadas. El cliente quiere ver dónde está su carga, y la prueba de entrega (POD) es la base de la liquidación.","conecta":["PostgreSQL + PostGIS","Google Maps","Offline-first"],"tareas":["F3-10","F3-11","F3-12","F3-13","F3-14","F3-15","F3-16"]},{"id":"pagos","nombre":"Pagos","sub":"liquidación semiautomática","icono":"💳","capa":"modulo","estado":"pend","porque":"El dinero es la razón por la que el transportista usa la plataforma. Pero el split automático salió del MVP: ningún PSP boliviano lo confirmó y era el riesgo crítico del proyecto. En su lugar: liquidación semiautomática con conciliación manual asistida.","conecta":["PSP boliviano","Viajes","Panel Admin"],"tareas":["F4-01","F4-02","F4-03","F4-04","F4-05","F4-06"]},{"id":"geo","nombre":"Geo","sub":"PostGIS aislado en su propio módulo","icono":"🗺️","capa":"modulo","estado":"pend","porque":"El producto tiene 6 consultas geoespaciales inherentes: camiones cerca del origen, matching flete-vehículo, cotización por ruta, tracking, alertas de desvío y cobertura por zona. Sin PostGIS esto se hace con bounding box en columnas numéricas: funciona con 100 vehículos y colapsa con 2.000, que es la meta del año uno.","conecta":["PostgreSQL + PostGIS","Viajes","Tracking"],"tareas":["F2-07","F2-09"],"extra":{"titulo":"Por qué va aislado","texto":"Prisma no soporta PostGIS nativamente: se usa SQL crudo ($queryRaw). Por eso TODAS las consultas geoespaciales viven en un módulo propio. Si algún día se cambia el ORM, el negocio no se toca.","color":"amarillo"}},{"id":"health","nombre":"Health","sub":"salud del servicio","icono":"💚","capa":"modulo","estado":"hecho","porque":"Es lo que consulta el balanceador de carga y el CI para saber si el sistema está vivo. Sin esto no se puede monitorear ni desplegar con seguridad.","conecta":["API /api/v1"],"tareas":["F0-05"],"prueba":{"titulo":"Probado el 18 de septiembre de 2026","items":["Endpoint de salud respondiendo HTTP 200","Verificado automáticamente en el job de arranque del CI"]}},{"id":"contracts","nombre":"Contratos","sub":"@soon/contracts · DTOs compartidos","icono":"📋","capa":"dominio","estado":"hecho","porque":"Si el backend cambia un campo y la app no, la app se rompe en producción. Al compartir los tipos, TypeScript avisa del desajuste antes de compilar. Esto es lo que evita lo que el ADR-001 llama duplicar contratos entre API y móvil.","conecta":["API /api/v1","App móvil","Panel Admin","Adaptadores"],"tareas":["F0-09","F0-10"],"prueba":{"titulo":"Base funcionando el 18 de septiembre de 2026","items":["ViajeDTO, CambiarEstadoDTO, TransicionDTO, HealthDTO y ErrorDTO ya definidos y en uso por la API"]}},{"id":"prisma","nombre":"Prisma","sub":"ORM · 16 modelos · 408 líneas","icono":"🔷","capa":"datos","estado":"pend","porque":"El esquema de datos es la forma del negocio. Ya existe uno de 16 modelos (User, Company, Vehicle, Trip, TripBid, Payment, POD...) escrito en el esqueleto anterior: es válido y se reutiliza.","conecta":["PostgreSQL + PostGIS","API /api/v1"],"tareas":["F0-08"]},{"id":"db","nombre":"PostgreSQL + PostGIS","sub":"datos transaccionales + geografía","icono":"🗄️","capa":"datos","estado":"user","porque":"Es donde vive todo: usuarios, viajes, ofertas, pagos, documentos. PostgreSQL porque es transaccional y auditable. PostGIS porque el producto es intrínsecamente geográfico.","conecta":["Prisma","Geo","Todos los módulos"],"tareas":["F0-07","F0-08","F0-11"],"extra":{"titulo":"Bloqueador actual","texto":"Requiere Docker Desktop instalado, que todavía no está. Alternativa: PostgreSQL nativo en Windows.","color":"rojo"}},{"id":"app","nombre":"App Móvil Multirol","sub":"React Native + Expo · una app, tres roles","icono":"📱","capa":"cliente","estado":"pend","porque":"Es el producto. Sin app no hay marketplace. Es una sola app con roles (Cliente / Transportista-Chofer), no tres apps separadas. Con una persona a 3-4 h por día, mantener 3 apps implicaría 3 fichas de tienda, 3 pipelines y 3 ciclos de actualización. Ahorra 3-4 semanas y hace que iOS reutilice toda la base.","conecta":["API /api/v1","Máquina de Estados","Contratos","Firebase FCM"],"tareas":["F0-16","F1-08","F1-09","F1-10","F2-09","F2-10","F2-13","F3-15","F5-01","F5-02","F7-01","F7-02"]},{"id":"admin","nombre":"Panel Admin","sub":"Next.js · fuera de la app por seguridad","icono":"🖥️","capa":"cliente","estado":"pend","porque":"El admin va FUERA de la app móvil. Es una decisión de seguridad: es la unidad que controla todo (usuarios, KYC, viajes, incidencias). Si estuviera dentro de la app, cualquier usuario con ingeniería inversa podría intentar escalar privilegios.","conecta":["API /api/v1","Pagos","Auth"],"tareas":["F4-07","F4-08","F4-09","F4-10","F1-12"],"extra":{"titulo":"Decisión abierta (DA-6)","texto":"El usuario lo imagina como una unidad master que controla por módulos y sockets. Pendiente de análisis profundo antes de implementar.","color":"amarillo"}},{"id":"usuario","nombre":"Usuario","sub":"Cliente · Transportista · Chofer","icono":"👤","capa":"cliente","estado":"pend","porque":"Son los tres roles que definen el producto: quien necesita mover carga, quien la mueve y quien supervisa. Cada uno ve una interfaz distinta de la misma app.","conecta":["App Móvil Multirol","Panel Admin"],"tareas":["F1-08","F1-09","F1-12"]},{"id":"psp","nombre":"PSP de pagos","sub":"Libélula · dLocal","icono":"💳","capa":"adaptador","estado":"pend","porque":"Si mañana cambia el proveedor de pagos o aparece uno con mejor tarifa, solo se cambia el adaptador, no el negocio. Eso es lo que hace viable el MVP sin tener el PSP confirmado.","conecta":["Pagos","Contratos"],"tareas":["F0-09","F4-02"]},{"id":"maps","nombre":"Google Maps","sub":"Geocoding · Routes · ETA","icono":"📍","capa":"adaptador","estado":"pend","porque":"Google Maps es caro y su precio puede cambiar. Con el adaptador se puede migrar a otro proveedor de mapas sin tocar la lógica de viajes ni de tracking.","conecta":["Tracking","Geo","Contratos"],"tareas":["F0-09"]},{"id":"ia","nombre":"IA","sub":"AIProvider · contrato ahora, IA en Fase 2","icono":"🤖","capa":"adaptador","estado":"pend","porque":"La IA aduanera salió del MVP: crea expectativa de responsabilidad legal por asesoría, y cada módulo extra desplaza la fecha del piloto. Pero el contrato sí se define ahora, con una implementación vacía, para que entre después sin refactor.","conecta":["Contratos","API /api/v1"],"tareas":["F0-10"],"extra":{"titulo":"Regla vinculante","texto":"Las apps nunca llaman a la IA directamente. Siempre a través del backend. Así se controlan los costos y no se expone la clave.","color":"rojo"}},{"id":"fcm","nombre":"Firebase FCM","sub":"notificaciones push","icono":"🔔","capa":"adaptador","estado":"pend","porque":"Para avisarle al transportista que hay una carga nueva y al cliente que el camión está llegando. Gratis hasta volúmenes altos.","conecta":["App Móvil Multirol","Tracking","Contratos"],"tareas":["F0-09","F2-13","F3-14"]}],"tareas":{"F0-01":{"nombre":"Crear monorepo pnpm + Turborepo","fase":"F0","dias":1,"estado":"hecho","fecha":"2026-09-18","depende":[],"entregable":"package.json, pnpm-workspace.yaml, turbo.json","porque":"Sin un solo repositorio con paquetes compartidos, la máquina de estados no puede correr a la vez en el servidor y en el celular. Esto es lo que hace posible el offline-first."},"F0-02":{"nombre":"Configurar TypeScript base + ESLint + Prettier","fase":"F0","dias":1,"estado":"hecho","fecha":"2026-09-18","depende":["F0-01"],"entregable":"packages/config/","porque":"El modo estricto de TypeScript atrapa los errores de tipo antes de ejecutar. Con una sola persona programando, el compilador es el revisor que no tienes.","nota":"TypeScript estricto funcionando. ESLint y Prettier pendientes."},"F0-03":{"nombre":"Estructura de carpetas según ADR-002 (1 app móvil)","fase":"F0","dias":0.5,"estado":"hecho","fecha":"2026-09-18","depende":["F0-01"],"entregable":"apps/mobile, apps/api, packages/*","porque":"Fija dónde vive cada cosa antes de escribir código. Sin esto, cada archivo nuevo es una decisión y el proyecto se dispersa.","nota":"Estructura creada, pero packages/database, brand, ui, apps/mobile y apps/admin-web siguen vacias."},"F0-04":{"nombre":"CI/CD con GitHub Actions (lint + tipos + tests + build)","fase":"F0","dias":1.5,"estado":"hecho","fecha":"2026-09-18","depende":["F0-02","F0-03"],"entregable":".github/workflows/ci.yml","porque":"Es el guardián automático: revisa cada cambio sin que tengas que acordarte. Es lo que compensa no tener un compañero que revise tu código."},"F0-05":{"nombre":"PROTOTIPO: módulo NestJS + Fastify","fase":"F0","dias":2,"estado":"hecho","fecha":"2026-09-18","depende":["F0-03"],"entregable":"Módulo health funcionando","porque":"PUNTO DE NO RETORNO. Validaba si la curva de aprendizaje era viable con 3-4 h por día. Resultado: VIABLE. El riesgo principal del proyecto quedó despejado con un prototipo funcional, no con una opinión."},"F0-06":{"nombre":"Validación de curva de aprendizaje (reporte honesto)","fase":"F0","dias":0.5,"estado":"hecho","fecha":"2026-09-18","depende":["F0-05"],"entregable":"Nota en progress/ con hallazgos","porque":"Registra qué costó, qué falló y qué se aprendió, para no repetir los mismos tropiezos en el próximo módulo."},"F0-07":{"nombre":"Docker Compose: PostgreSQL + PostGIS + Redis","fase":"F0","dias":1,"estado":"pend","depende":["F0-01"],"entregable":"docker-compose.yml","porque":"Levanta la base de datos real con un comando. Sin esto no se puede probar nada que dependa de datos."},"F0-08":{"nombre":"Prisma init + schema base + CREATE EXTENSION postgis","fase":"F0","dias":1.5,"estado":"pend","depende":["F0-07"],"entregable":"packages/database/","porque":"Traduce los 16 modelos del negocio a la base real y habilita las consultas geográficas."},"F0-09":{"nombre":"Contratos de adaptadores: pagos, IA, mapas, archivos, auth, mensajería","fase":"F0","dias":2,"estado":"pend","depende":["F0-08"],"entregable":"packages/contracts/providers/","porque":"Define la forma de cada servicio externo antes de contratarlo. Permite construir el MVP completo aunque el PSP boliviano todavía no esté confirmado."},"F0-10":{"nombre":"Contrato de AIProvider","fase":"F0","dias":0.5,"estado":"pend","depende":["F0-09"],"entregable":"Interfaz + stub","porque":"Deja la puerta abierta a la IA sin que entre al MVP. Cuando llegue su momento, entra sin refactor."},"F0-11":{"nombre":"Diseño de aislamiento multiempresa (tenantId + row-level)","fase":"F0","dias":1.5,"estado":"pend","depende":["F0-08"],"entregable":"Documento de diseño","porque":"Evita que una empresa vea los datos de otra. Es uno de los 3 riesgos más graves detectados en la revisión de arquitectura."},"F0-12":{"nombre":"Diseño offline-first: outbox, idempotencia, conflictos","fase":"F0","dias":2,"estado":"pend","depende":["F0-08"],"entregable":"Documento de diseño (ADR-005)","porque":"Es el diseño que hace posible operar en los tramos sin señal. El ADR-005 ya está escrito y aprobado."},"F0-13":{"nombre":"Reservar bundle IDs, package names y dominio SOON","fase":"F0","dias":0.5,"estado":"user","depende":[],"entregable":"Cuentas reservadas","porque":"Sin los identificadores reservados no se puede publicar en las tiendas ni configurar las notificaciones push. Es acción del usuario."},"F0-14":{"nombre":"packages/brand: tokens de marca + assets","fase":"F0","dias":2,"estado":"hecho","depende":[],"entregable":"Tokens propagándose","porque":"Centraliza colores, tipografía y logos para que la app y el panel se vean como el mismo producto.","fecha":"2026-09-18","nota":"tokens.ts compilado. Color de peligro definido con contraste medido 4.68:1 (AA)."},"F0-15":{"nombre":"Entornos dev/test/pilot/prod + gestión de secretos","fase":"F0","dias":1.5,"estado":"pend","depende":["F0-04"],"entregable":"Configuración desplegable","porque":"Separa los datos de prueba de los datos reales. Sin esto, una prueba puede borrar información de un cliente."},"F0-16":{"nombre":"Arquitectura UX base con Expo Router (1 app, 3 roles)","fase":"F0","dias":2,"estado":"pend","depende":["F0-03"],"entregable":"Navegación por rol","porque":"Define cómo se ve la app antes de construir cada pantalla. Es lo que permite que una sola app sirva a tres roles distintos sin confundir al chofer."},"F0-17":{"nombre":"Artefactos docs/: ROADMAP, BACKLOG, STATUS, CHANGELOG","fase":"F0","dias":1,"estado":"hecho","depende":[],"entregable":"docs/ completo","porque":"Es la memoria del proyecto. Sin esto, en tres semanas no vas a recordar por qué se decidió algo.","fecha":"2026-09-18","nota":"ROADMAP, STATUS, BACKLOG y CHANGELOG generados desde el JSON. No se editan a mano."},"F0-18":{"nombre":"Solicitar vectoriales del logotipo a los autores de marca","fase":"F0","dias":0.5,"estado":"user","depende":[],"entregable":"Solicitud enviada","porque":"Sin los archivos vectoriales no se pueden generar los iconos de las tiendas ni los assets de la app. Es acción del usuario."},"F1-01":{"nombre":"Autenticación: registro + login","fase":"F1","dias":2,"estado":"pend","depende":["F0-08"],"porque":"Es la puerta de entrada: sin saber quién es quién no se puede proteger nada."},"F1-02":{"nombre":"OTP por email (canal primario, DA-1)","fase":"F1","dias":2,"estado":"pend","depende":["F1-01"],"porque":"El email es casi gratis y basta para el piloto. Se eligió primero por costo, no por elegancia."},"F1-03":{"nombre":"OTP WhatsApp (canal secundario)","fase":"F1","dias":1.5,"estado":"pend","depende":["F1-02"],"porque":"En Bolivia el WhatsApp es el canal real de comunicación. Es el respaldo natural del email."},"F1-04":{"nombre":"Sesiones revocables + recuperación de cuenta","fase":"F1","dias":1.5,"estado":"pend","depende":["F1-01"],"porque":"Permite cerrar el acceso de un dispositivo perdido o robado, algo crítico en transporte."},"F1-05":{"nombre":"RBAC con permisos verificados en backend","fase":"F1","dias":2,"estado":"pend","depende":["F1-01"],"porque":"Los permisos se verifican en el servidor, nunca solo en la app. Cualquiera puede modificar una app; el servidor no."},"F1-06":{"nombre":"Aislamiento multiempresa (tenantId + row-level)","fase":"F1","dias":3,"estado":"pend","depende":["F1-05"],"porque":"Es el candado que impide que una empresa vea los datos de otra."},"F1-07":{"nombre":"Pruebas de penetración entre organizaciones","fase":"F1","dias":2,"estado":"pend","depende":["F1-06"],"porque":"Verifica de verdad que el candado funciona, intentando romperlo a propósito."},"F1-08":{"nombre":"Registro de empresa cliente","fase":"F1","dias":2,"estado":"pend","depende":["F1-06"],"porque":"Es el alta del lado que paga por mover carga."},"F1-09":{"nombre":"Registro de transportista y chofer","fase":"F1","dias":2,"estado":"pend","depende":["F1-06"],"porque":"Es el alta del lado que ejecuta el transporte. El chofer necesita una interfaz mucho más simple que el transportista."},"F1-10":{"nombre":"Registro de vehículo + documentos (RUAT, licencia, carnet)","fase":"F1","dias":2,"estado":"pend","depende":["F1-09"],"porque":"Sin documentos verificados no hay confianza para asignar una carga."},"F1-11":{"nombre":"Carga segura de archivos (URLs firmadas)","fase":"F1","dias":1.5,"estado":"pend","depende":["F0-09"],"porque":"Los documentos y las fotos del POD no pueden quedar en un enlace público. Las URLs firmadas caducan."},"F1-12":{"nombre":"Flujo KYC: revisión y aprobación por admin","fase":"F1","dias":2,"estado":"pend","depende":["F1-10"],"porque":"Es el filtro humano que aprueba a quién entra a la plataforma."},"F2-01":{"nombre":"Modelo de datos: Trip, Load, Offer","fase":"F2","dias":2,"estado":"pend","depende":["F1-06"],"porque":"Define las tres entidades del marketplace. Todo lo demás se construye encima."},"F2-02":{"nombre":"Crear solicitud de flete (todos los campos)","fase":"F2","dias":2.5,"estado":"pend","depende":["F2-01"],"porque":"Es el primer paso del negocio: alguien publica que necesita mover carga."},"F2-03":{"nombre":"Catálogo de tipos de transporte (7 categorías)","fase":"F2","dias":1,"estado":"pend","depende":["F2-01"],"porque":"Clasifica la oferta y la demanda para poder cruzarlas."},"F2-04":{"nombre":"★ Decidir y parametrizar comisión (B-08 pendiente)","fase":"F2","dias":0.5,"estado":"pend","depende":[],"porque":"Es el modelo de ingreso del negocio. Sin este número no se puede cotizar ni liquidar. Sigue pendiente de decisión entre 10% y 10-15%."},"F2-05":{"nombre":"Motor de tarifa base: ruta + multiplicador camión/peso","fase":"F2","dias":3,"estado":"pend","depende":["F2-01"],"porque":"Automatiza el precio para que no haya que negociar cada viaje desde cero."},"F2-06":{"nombre":"Tarifa manual dinámica (ajuste por combustible/época/demanda)","fase":"F2","dias":2,"estado":"pend","depende":["F2-05"],"porque":"El precio del transporte en Bolivia cambia por bloqueos, combustible y época. El sistema debe poder ajustarlo sin reprogramar."},"F2-07":{"nombre":"Módulo geo/ con PostGIS (consultas aisladas)","fase":"F2","dias":2.5,"estado":"pend","depende":["F2-01"],"porque":"Habilita las 6 consultas geográficas del producto en un solo lugar aislado."},"F2-08":{"nombre":"Cotización instantánea + fallback a ofertas","fase":"F2","dias":2,"estado":"pend","depende":["F2-07"],"porque":"Da una respuesta inmediata al cliente, y si no hay tarifa calculable, deja que los transportistas oferten."},"F2-09":{"nombre":"Publicar y filtrar oportunidades (radio geográfico)","fase":"F2","dias":2.5,"estado":"pend","depende":["F2-07"],"porque":"El transportista solo debe ver cargas que le sirven: cerca de donde está, no todas las del país."},"F2-10":{"nombre":"Ofertas: crear, editar, retirar","fase":"F2","dias":2,"estado":"pend","depende":["F2-09"],"porque":"Es el mecanismo por el que el transportista propone su precio."},"F2-11":{"nombre":"Puja controlada + contraoferta","fase":"F2","dias":2,"estado":"pend","depende":["F2-10"],"porque":"Permite negociar sin salir de la plataforma ni volver al WhatsApp."},"F2-12":{"nombre":"Adjudicación y creación de viaje","fase":"F2","dias":2,"estado":"pend","depende":["F2-11"],"porque":"Es el momento en que una oferta se convierte en un compromiso real y nace el viaje."},"F2-13":{"nombre":"Notificaciones del marketplace (push)","fase":"F2","dias":2,"estado":"pend","depende":["F0-09"],"porque":"Sin aviso, el transportista no se entera de que hay carga nueva y la oportunidad se pierde."},"F2-14":{"nombre":"Pruebas E2E del flujo marketplace","fase":"F2","dias":2,"estado":"pend","depende":["F2-12"],"porque":"Verifica el flujo completo de punta a punta, no cada pieza por separado."},"F3-01":{"nombre":"Máquina de estados (11 + 2 alternativos) en backend","fase":"F3","dias":2.5,"estado":"hecho","fecha":"2026-09-18","depende":["F2-12"],"porque":"Define qué estados puede tener un viaje y quién puede moverlos. Es la ley del sistema.","nota":"La versión base ya corre con 6 estados."},"F3-02":{"nombre":"Validación de transiciones: permisos, condiciones, evidencia","fase":"F3","dias":2,"estado":"hecho","fecha":"2026-09-18","depende":["F3-01"],"porque":"Impide que alguien salte un paso, como liquidar un viaje que nunca se entregó."},"F3-03":{"nombre":"★ Máquina de estados REPLICABLE en packages/domain","fase":"F3","dias":3,"estado":"hecho","fecha":"2026-09-18","depende":["F3-01"],"porque":"Es la decisión que hace posible todo el offline-first: la misma regla corre en el servidor y en el celular sin duplicar código.","nota":"Implementada en @soon/domain."},"F3-04":{"nombre":"TripTransition — historial auditable","fase":"F3","dias":1.5,"estado":"pend","depende":["F3-01"],"porque":"Registra quién cambió qué y cuándo. Sin este historial no hay forma de resolver una disputa."},"F3-05":{"nombre":"SyncOutbox en SQLite (cliente)","fase":"F3","dias":3,"estado":"pend","depende":["F3-03"],"porque":"Es la cola que guarda en el celular lo que no se pudo enviar, para mandarlo cuando vuelva la señal."},"F3-06":{"nombre":"Idempotencia con clientTransitionId","fase":"F3","dias":2.5,"estado":"hecho","fecha":"2026-09-18","depende":["F3-05"],"porque":"Evita que un reintento sin señal duplique el cambio de estado.","nota":"Probado: la segunda petición idéntica no duplicó la operación."},"F3-07":{"nombre":"Resolución de conflictos + AuditLog","fase":"F3","dias":3,"estado":"pend","depende":["F3-06"],"porque":"Define qué pasa cuando dos actores modifican el mismo viaje sin conexión: el admin gana lo administrativo, el chofer lo operativo de su viaje, y todo conflicto queda auditado."},"F3-08":{"nombre":"Sincronización: reintentos, backoff, resolución","fase":"F3","dias":2.5,"estado":"pend","depende":["F3-07"],"porque":"Hace que la sincronización sea paciente y no sature la red cuando vuelve la señal."},"F3-09":{"nombre":"Pruebas de operación sin conexión (modo avión)","fase":"F3","dias":2,"estado":"pend","depende":["F3-08"],"porque":"Es la única prueba que demuestra de verdad que el offline funciona: con el celular en modo avión."},"F3-10":{"nombre":"Captura y transmisión de ubicación (buffer, reintentos)","fase":"F3","dias":2.5,"estado":"pend","depende":["F3-05"],"porque":"Es la base del tracking: guardar la posición aunque no haya señal y enviarla después."},"F3-11":{"nombre":"Tracking adaptativo + criterio medible de batería","fase":"F3","dias":2.5,"estado":"pend","depende":["F3-10"],"porque":"Un GPS que transmite siempre agota la batería del chofer en horas. Debe adaptarse al movimiento."},"F3-12":{"nombre":"Mapa en tiempo real con degradación sin conectividad","fase":"F3","dias":3,"estado":"pend","depende":["F3-11"],"porque":"Debe seguir mostrando algo útil cuando se cae la conexión, no una pantalla vacía."},"F3-13":{"nombre":"Registro de incidencias (funciona offline)","fase":"F3","dias":2,"estado":"pend","depende":["F3-05"],"porque":"Un pinchazo o un bloqueo ocurren justo donde no hay señal. La incidencia debe poder registrarse igual."},"F3-14":{"nombre":"Alertas y notificaciones push","fase":"F3","dias":2,"estado":"pend","depende":["F0-09"],"porque":"Avisa al cliente de la llegada y al transportista de cualquier desvío."},"F3-15":{"nombre":"POD verificable: foto + firma + hash + timestamp + GPS","fase":"F3","dias":3,"estado":"pend","depende":["F3-05"],"porque":"Es la prueba de entrega y la base de la liquidación. Sin POD verificable no hay forma de cobrar ni de defenderse de un reclamo."},"F3-16":{"nombre":"Verificación cruzada de POD al sincronizar","fase":"F3","dias":2,"estado":"pend","depende":["F3-15"],"porque":"Detecta si el POD fue alterado entre el celular y el servidor."},"F4-01":{"nombre":"Contrato PaymentProvider + ledger inmutable","fase":"F4","dias":2.5,"estado":"pend","depende":["F0-09"],"porque":"Un registro de movimientos que no se puede editar es lo que hace auditable el dinero."},"F4-02":{"nombre":"Integración con PSP boliviano (o stub si no hay)","fase":"F4","dias":3,"estado":"pend","depende":["F4-01"],"porque":"Conecta con el proveedor de pagos real. Si no está confirmado, se construye contra el stub y se cambia después sin tocar el negocio."},"F4-03":{"nombre":"Flujo de cobro al cliente","fase":"F4","dias":2.5,"estado":"pend","depende":["F4-02"],"porque":"Es el momento en que entra el dinero."},"F4-04":{"nombre":"Liquidación semiautomática al transportista","fase":"F4","dias":3,"estado":"pend","depende":["F4-02"],"porque":"Reemplaza el split automático que salió del MVP. Calcula cuánto le toca a cada parte y deja la conciliación asistida."},"F4-05":{"nombre":"Conciliación: panel + registro manual","fase":"F4","dias":3,"estado":"pend","depende":["F4-04"],"porque":"Permite cuadrar lo que dice el banco con lo que dice el sistema, aunque la conciliación no sea automática."},"F4-06":{"nombre":"Comprobantes y facturación","fase":"F4","dias":2,"estado":"pend","depende":["F4-03"],"porque":"En Bolivia sin comprobante no hay cierre contable para el cliente."},"F4-07":{"nombre":"Panel admin: gestión de usuarios y KYC","fase":"F4","dias":3,"estado":"pend","depende":["F1-12"],"porque":"Es donde el administrador aprueba, suspende o corrige cuentas."},"F4-08":{"nombre":"Panel admin: supervisión de viajes","fase":"F4","dias":3,"estado":"pend","depende":["F4-07"],"porque":"Permite ver todos los viajes en curso y detectar cuál se atascó."},"F4-09":{"nombre":"Panel admin: incidencias y disputas","fase":"F4","dias":2.5,"estado":"pend","depende":["F4-08"],"porque":"Cuando cliente y transportista no coinciden, alguien tiene que resolver con evidencia."},"F4-10":{"nombre":"Auditoría transversal (AuditLog) consultable","fase":"F4","dias":2,"estado":"pend","depende":["F3-07"],"porque":"Convierte el registro de conflictos en algo que se puede consultar y usar como prueba."},"F5-01":{"nombre":"Beta cerrada Android","fase":"F5","dias":0,"estado":"pend","depende":["F4-10"],"porque":"Primera prueba con usuarios reales antes de abrir al público."},"F5-02":{"nombre":"Corrección de hallazgos de beta","fase":"F5","dias":0,"estado":"pend","depende":["F5-01"],"porque":"Los errores que aparecen con usuarios reales no se ven en las pruebas internas."},"F7-01":{"nombre":"Adaptación iOS","fase":"F7","dias":0,"estado":"pend","depende":["F5-02"],"porque":"Reutiliza toda la base ya construida para Android. Son 4 semanas, no 28."},"F7-02":{"nombre":"Publicación en App Store","fase":"F7","dias":0,"estado":"pend","depende":["F7-01"],"porque":"Cierra el ciclo de producto en las dos tiendas."}}};/*__DATOS_FIN__*/
+</script>
+
+<script>
+/* ══════════════════════════════════════════════════════════════
+   MOTOR UNICO
+   Un solo calculo de estado para las dos pestanas. Antes cada vista
+   tenia su copia y podian divergir.
+   ══════════════════════════════════════════════════════════════ */
+var HOY = new Date(DATOS.meta.hoy + 'T00:00:00');
+var FACTOR = 1.4, FINDE = 1.4;
+var FASES = Object.keys(DATOS.meta.fases);
+
+function fecha(s){ return new Date(s + 'T00:00:00'); }
+function dias(a,b){ return Math.round((b-a)/86400000); }
+function sumaDias(d,n){ var f = new Date(d.getTime()); f.setDate(f.getDate()+n); return f; }
+
+function esfuerzoFase(f){
+  var total = 0, hecho = 0;
+  for (var id in DATOS.tareas){
+    var t = DATOS.tareas[id];
+    if (t.fase !== f) continue;
+    total += (t.dias || 0);
+    if (t.estado === 'hecho') hecho += (t.dias || 0);
+  }
+  return {total: total, hecho: hecho, resta: total - hecho};
+}
+function veredictoFase(f){
+  var e = esfuerzoFase(f);
+  var queda = dias(HOY, fecha(DATOS.meta.fases[f].fin));
+  var necesita = Math.ceil(e.resta * FACTOR * FINDE);
+  return {esfuerzo:e, queda:queda, necesita:necesita, holgura:queda-necesita,
+          pct: e.total ? Math.round(e.hecho/e.total*100) : 0};
+}
+function desbloqueada(id){
+  var t = DATOS.tareas[id];
+  if (!t || t.estado === 'hecho') return false;
+  if (!t.depende || !t.depende.length) return true;
+  for (var i=0;i<t.depende.length;i++){
+    var dt = DATOS.tareas[t.depende[i]];
+    if (dt && dt.estado !== 'hecho') return false;
+  }
+  return true;
+}
+function clasificar(id){
+  var t = DATOS.tareas[id];
+  if (!t) return null;
+  if (t.estado === 'hecho') return 'hecho';
+  if (t.estado === 'user')  return 'user';
+  if (!desbloqueada(id)) return 'bloqueada';
+  return veredictoFase(t.fase).holgura < 0 ? 'retraso' : 'activo';
+}
+function desbloqueaA(id){
+  var r = [];
+  for (var k in DATOS.tareas)
+    if (DATOS.tareas[k].depende && DATOS.tareas[k].depende.indexOf(id) >= 0) r.push(k);
+  return r;
+}
+function nodosDe(id){
+  var r = [];
+  DATOS.nodos.forEach(function(n){ if (n.tareas.indexOf(id) >= 0) r.push(n); });
+  return r;
+}
+function buscarNodo(id){
+  for (var i=0;i<DATOS.nodos.length;i++) if (DATOS.nodos[i].id === id) return DATOS.nodos[i];
+  return null;
+}
+function estadoNodo(n){
+  var hechas=0, activo=0, urgente=0, user=0;
+  for (var i=0;i<n.tareas.length;i++){
+    var t = DATOS.tareas[n.tareas[i]];
+    if (!t) continue;
+    if (t.estado === 'hecho'){ hechas++; continue; }
+    if (t.estado === 'user'){ user++; continue; }
+    var c = clasificar(n.tareas[i]);
+    if (c === 'retraso') urgente++;
+    if (c === 'activo') activo++;
+  }
+  if (urgente > 0) return 'retraso';
+  if (user > 0) return 'user';
+  if (activo > 0) return 'activo';
+  if (hechas === n.tareas.length && n.tareas.length) return 'hecho';
+  if (hechas > 0) return 'activo';
+  return 'pend';
+}
+function faseActual(){
+  for (var k in DATOS.meta.fases)
+    if (HOY >= fecha(DATOS.meta.fases[k].inicio) && HOY <= fecha(DATOS.meta.fases[k].fin)) return k;
+  return HOY < fecha(DATOS.meta.fases.F0.inicio) ? 'F0' : 'F7';
+}
+function alertas(){
+  var act=[], ret=[], rie=[], usr=[];
+  for (var id in DATOS.tareas){
+    var t = DATOS.tareas[id];
+    if (t.estado === 'user'){ usr.push(id); continue; }
+    var c = clasificar(id);
+    if (c === 'activo') act.push(id);
+    if (c === 'retraso') ret.push(id);
+    if (c === 'bloqueada') rie.push(id);
+  }
+  return {activo:act, retraso:ret, riesgo:rie, user:usr};
+}
+</script>
+
+<script>
+/* ══════════════════════════════════════════════════════════════
+   PESTANAS
+   ══════════════════════════════════════════════════════════════ */
+var PESTANA = 'arq';
+function pestana(p){
+  PESTANA = p;
+  document.getElementById('tab-arq').className = (p==='arq') ? 'on' : '';
+  document.getElementById('tab-gan').className = (p==='gan') ? 'on' : '';
+  document.getElementById('panel-arq').className = 'panel' + (p==='arq'?' on':'');
+  document.getElementById('panel-gan').className = 'panel' + (p==='gan'?' on':'');
+  cerrarFicha();
+  if (p==='gan') pintaGantt();
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+/* ══════════════════════════════════════════════════════════════
+   RESUMEN Y ALERTAS
+   ══════════════════════════════════════════════════════════════ */
+function pintaBarra(){
+  var hechas=0, tot=0, act=0, ret=0, usr=0;
+  for (var id in DATOS.tareas){
+    tot++;
+    var c = clasificar(id);
+    if (c==='hecho') hechas++;
+    if (c==='activo') act++;
+    if (c==='retraso') ret++;
+    if (c==='user') usr++;
+  }
+  var v = veredictoFase('F0');
+  document.getElementById('barra').innerHTML =
+    '<div class="rc"><div class="n">'+hechas+' / '+tot+'</div><div class="l">tareas completadas</div>'+
+      '<div class="d">'+Math.round(hechas/tot*100)+'% del total</div></div>'+
+    '<div class="rc"><div class="n az">'+act+'</div><div class="l">desbloqueadas</div>'+
+      '<div class="d">se pueden trabajar hoy</div></div>'+
+    '<div class="rc"><div class="n ro">'+ret+'</div><div class="l">urgentes</div>'+
+      '<div class="d">la fase no alcanza</div></div>'+
+    '<div class="rc"><div class="n am">'+usr+'</div><div class="l">esperan tu acción</div>'+
+      '<div class="d">no son programación</div></div>'+
+    '<div class="rc"><div class="n '+(v.holgura<0?'ro':'')+'">'+
+      (v.holgura<0?v.holgura:'+'+v.holgura)+' d</div><div class="l">margen Fase 0</div>'+
+      '<div class="d">'+(v.holgura<0?'no alcanza':'alcanza')+'</div></div>';
+}
+
+function pintaAlertas(){
+  var a = alertas(), f = faseActual();
+  var v = veredictoFase(f), fas = DATOS.meta.fases[f];
+  var h = '';
+  var color = v.holgura < 0 ? 'r' : (v.holgura < 7 ? 'w' : 'a');
+  var juicio = v.holgura < 0
+    ? 'NO ALCANZA — faltan ' + Math.abs(v.holgura) + ' días'
+    : 'ALCANZA — sobran ' + v.holgura + ' días';
+
+  h += '<div class="al"><span class="tipo '+color+'">'+f+'</span><span><b>'+fas.nombre+
+       '</b> · hito '+fas.hito+' · cierra el '+fas.fin+'<br>Quedan <b>'+v.queda+
+       ' días</b> · falta trabajar <b>'+v.necesita+' días</b> → <b>'+juicio+'</b></span></div>';
+
+  if (a.activo.length)
+    h += '<div class="al"><span class="tipo a">AHORA</span><span><b>'+a.activo.length+
+         ' desbloqueada'+(a.activo.length===1?'':'s')+'</b> — '+a.activo.slice(0,6).join(', ')+
+         (a.activo.length>6?' y '+(a.activo.length-6)+' más':'')+'</span></div>';
+  if (a.user.length)
+    h += '<div class="al"><span class="tipo r">TU TURNO</span><span><b>'+a.user.length+
+         ' tarea'+(a.user.length===1?'':'s')+' esperan solo tu acción</b> — '+
+         a.user.map(function(id){ return id+' ('+DATOS.tareas[id].nombre+')'; }).join(', ')+'</span></div>';
+  if (a.retraso.length)
+    h += '<div class="al"><span class="tipo r">ATRASO</span><span><b>'+a.retraso.length+
+         ' urgente'+(a.retraso.length===1?'':'s')+'</b> — '+a.retraso.slice(0,6).join(', ')+'</span></div>';
+  if (a.riesgo.length)
+    h += '<div class="al"><span class="tipo w">BLOQUEO</span><span><b>'+a.riesgo.length+
+         ' esperan otra tarea</b> — '+a.riesgo.slice(0,5).join(', ')+
+         (a.riesgo.length>5?' y '+(a.riesgo.length-5)+' más':'')+'</span></div>';
+
+  document.getElementById('alertas').innerHTML = '<h3>⚡ Estado del trabajo — '+DATOS.meta.hoy+'</h3>'+h;
+}
+</script>
+
+<script>
+/* ══════════════════════════════════════════════════════════════
+   PESTANA 1 — ARQUITECTURA
+   ══════════════════════════════════════════════════════════════ */
+function caja(id, extra){
+  var n = buscarNodo(id);
+  if (!n) return '';
+  var est = estadoNodo(n);
+  var cl = {hecho:'hecho', pend:'pend', user:'user', activo:'activo',
+            retraso:'retraso', riesgo:'riesgo'}[est] || 'pend';
+  var pt  = {hecho:'✓', user:'!', activo:'▶', retraso:'▲', riesgo:'◐', pend:'·'}[est];
+  var ptc = {hecho:'pt-h', user:'pt-u', activo:'pt-c', retraso:'pt-u', riesgo:'pt-p', pend:'pt-p'}[est];
+  var hechas = 0, tot = n.tareas.length;
+  n.tareas.forEach(function(t){
+    var tt = DATOS.tareas[t];
+    if (tt && tt.estado === 'hecho') hechas++;
+  });
+  var cnt = hechas > 0 ? (hechas + ' de ' + tot + ' hechas') : (tot + ' por hacer');
+  var aviso = est === 'activo'  ? '<span class="aviso aviso-a">▶ TRABAJANDO AQUÍ</span>'
+            : est === 'retraso' ? '<span class="aviso aviso-r">▲ ATRASADO</span>'
+            : est === 'riesgo'  ? '<span class="aviso aviso-w">◐ EN RIESGO</span>' : '';
+
+  return '<div class="caja '+cl+'" onclick="verNodo(\''+id+'\')"'+(extra||'')+'>'+aviso+
+    '<span class="pt '+ptc+'">'+pt+'</span>'+
+    '<span class="ic">'+n.icono+'</span>'+
+    '<span class="nm">'+n.nombre+'</span>'+
+    '<span class="sub2">'+n.sub+'</span>'+
+    '<span class="cnt">'+cnt+'</span></div>';
+}
+
+function pintaPFD(){
+  var h = '';
+  h += '<div class="nivel">'+caja('usuario',' style="min-width:230px"')+'</div>';
+  h += '<div class="flecha">▼</div>';
+  h += '<div class="nivel">'+caja('app',' style="min-width:250px"')+'</div>';
+  h += '<div class="flecha">▼<span class="flecha-lbl">HTTPS · /api/v1</span></div>';
+  h += '<div class="nivel">'+caja('api',' style="min-width:300px"')+'</div>';
+  h += '<div class="flecha">▼</div><div class="ramas">';
+  ['viajes','auth','tracking','pagos','geo','health'].forEach(function(id){
+    h += '<div class="rama-item">'+caja(id)+'</div>';
+  });
+  h += '</div><div class="flecha">▼</div>';
+  h += '<div class="nivel" style="gap:13px">'+caja('fsm',' style="min-width:240px"')+
+       caja('contracts',' style="min-width:200px"')+caja('offline',' style="min-width:200px"')+'</div>';
+  h += '<div class="flecha">▼</div>';
+  h += '<div class="nivel" style="gap:13px">'+caja('prisma',' style="min-width:195px"')+
+       caja('db',' style="min-width:225px"')+'</div>';
+  h += '<div class="flecha">▼</div>';
+  h += '<div class="nivel">'+caja('admin',' style="min-width:265px"')+'</div>';
+  h += '<div class="adapt">── ADAPTADORES (se pueden cambiar sin tocar el negocio) ──<div class="chips c">';
+  ['psp','maps','ia','fcm'].forEach(function(id){
+    var n = buscarNodo(id);
+    h += '<span class="chip ext" onclick="verNodo(\''+id+'\')">'+n.icono+' '+n.nombre+'</span>';
+  });
+  h += '</div></div>';
+  document.getElementById('pfd').innerHTML = h;
+}
+
+function pintaDetalles(){
+  var h = '';
+  DATOS.nodos.forEach(function(n){
+    h += '<div class="detalle" id="det-'+n.id+'">';
+    h += '<div class="det-head"><span class="det-ico">'+n.icono+'</span>';
+    h += '<div class="det-tit"><h2>'+n.nombre+'</h2><p>'+n.sub+'</p></div>';
+    h += '<button class="det-cerrar" onclick="cerrarNodo()">✕</button></div>';
+    h += '<div class="det-grid"><div>';
+    h += '<div class="bloque porque"><h3>Por qué existe</h3><p>'+n.porque+'</p></div>';
+    if (n.extra)
+      h += '<div class="bloque '+(n.extra.color||'')+'" style="margin-top:11px"><h3>'+
+           n.extra.titulo+'</h3><p>'+n.extra.texto+'</p></div>';
+    h += '</div><div>';
+    h += '<div class="bloque"><h3>Tareas — haz clic para abrir la ficha</h3><div class="tlist">';
+    n.tareas.forEach(function(tid){
+      var t = DATOS.tareas[tid];
+      if (!t) return;
+      var c = clasificar(tid);
+      var cl = c === 'hecho' ? 'ok' : (c === 'user' ? 'usr' : '');
+      var bx = c === 'hecho' ? '✓' : (c === 'user' ? '!' : '');
+      h += '<div class="trow '+cl+'" onclick="abrirFicha(\''+tid+'\')">'+
+           '<span class="bx">'+bx+'</span><span class="id">'+tid+'</span>'+
+           '<span class="nm">'+t.nombre+'</span><span class="go">›</span></div>';
+    });
+    h += '</div></div>';
+    h += '<div class="bloque" style="margin-top:11px"><h3>Se conecta con</h3><div class="chips">';
+    n.conecta.forEach(function(c){ h += '<span class="chip">'+c+'</span>'; });
+    h += '</div></div></div></div>';
+    if (n.prueba){
+      h += '<div class="prueba"><b>✅ '+n.prueba.titulo+'</b><ul>';
+      n.prueba.items.forEach(function(it){ h += '<li>'+it+'</li>'; });
+      h += '</ul>';
+      if (n.prueba.nota) h += '<p class="nota">'+n.prueba.nota+'</p>';
+      h += '</div>';
+    }
+    h += '</div>';
+  });
+  document.getElementById('detalles').innerHTML = h;
+}
+
+var NODO_ACTUAL = null;
+function verNodo(id, sinScroll){
+  document.querySelectorAll('.detalle').forEach(function(d){ d.classList.remove('show'); });
+  document.querySelectorAll('.caja').forEach(function(c){ c.classList.remove('sel'); });
+  cerrarFicha();
+  var det = document.getElementById('det-'+id);
+  if (!det) return;
+  NODO_ACTUAL = id;
+  det.classList.add('show');
+  document.getElementById('ayuda').style.display = 'none';
+  if (!sinScroll) det.scrollIntoView({behavior:'smooth', block:'start'});
+}
+function cerrarNodo(){
+  document.querySelectorAll('.detalle').forEach(function(d){ d.classList.remove('show'); });
+  NODO_ACTUAL = null;
+  document.getElementById('ayuda').style.display = 'block';
+}
+</script>
+
+<script>
+/* ══════════════════════════════════════════════════════════════
+   PESTANA 2 — GANTT
+   ══════════════════════════════════════════════════════════════ */
+var ZOOM = [
+  {id:'todo',    nombre:'Todo el proyecto', sub:'28 semanas', px:4.5, desde:null, hasta:null},
+  {id:'tres',    nombre:'3 meses',          sub:'F0 a F2',     px:13,  desde:'F0', hasta:'F2'},
+  {id:'mes',     nombre:'1 mes',            sub:'Fase 0',      px:40,  desde:'F0', hasta:'F0'},
+  {id:'semanas', nombre:'2 semanas',        sub:'detalle',     px:78,  desde:'F0', hasta:'F0'}
+];
+var zoomActual = 'mes';
+
+function rangoZoom(){
+  var z = ZOOM.filter(function(x){ return x.id === zoomActual; })[0];
+  var ini, fin;
+  if (z.desde){ ini = fecha(DATOS.meta.fases[z.desde].inicio); fin = fecha(DATOS.meta.fases[z.hasta].fin); }
+  else { ini = fecha(DATOS.meta.fases[FASES[0]].inicio); fin = fecha(DATOS.meta.fases[FASES[FASES.length-1]].fin); }
+  return {ini:ini, fin:fin, px:z.px, dias:dias(ini,fin)};
+}
+
+function tareasDe(f){
+  var ids = [];
+  for (var id in DATOS.tareas) if (DATOS.tareas[id].fase === f) ids.push(id);
+  var orden = [], puestas = {}, pend = ids.slice(), guard = 0;
+  while (pend.length && guard++ < 300){
+    var avance = false;
+    for (var i=0;i<pend.length;i++){
+      var id = pend[i], t = DATOS.tareas[id], listo = true;
+      for (var j=0;j<(t.depende||[]).length;j++){
+        var d = t.depende[j];
+        if (ids.indexOf(d) >= 0 && !puestas[d]){ listo = false; break; }
+      }
+      if (listo){ orden.push(id); puestas[id]=1; pend.splice(i,1); avance=true; break; }
+    }
+    if (!avance){ orden = orden.concat(pend); break; }
+  }
+  return orden;
+}
+
+function pintaZoom(){
+  var h = '', v = veredictoFase('F0');
+  ZOOM.forEach(function(z){
+    var urg = (z.id==='mes' || z.id==='semanas') && v.holgura < 0;
+    h += '<button class="'+(zoomActual===z.id?'on':'')+(urg?' urgente':'')+
+         '" onclick="cambiarZoom(\''+z.id+'\')">'+z.nombre+
+         '<span class="badge">'+z.sub+'</span></button>';
+  });
+  document.getElementById('zoom').innerHTML = h;
+}
+function cambiarZoom(id){ zoomActual = id; pintaZoom(); pintaEscala(); pintaGantt(); }
+
+function pintaEscala(){
+  var r = rangoZoom(), ancho = Math.round(3*FINDE*r.px);
+  var el = document.getElementById('escala');
+  if (zoomActual === 'todo')
+    el.innerHTML = '⚠ <b>Vista aplastada:</b> '+r.px+' px por día. Una tarea de 3 días mide <b>'+
+      ancho+' píxeles</b> — se ven puntos, no barras. Usá <b>1 mes</b> o <b>2 semanas</b>.';
+  else if (zoomActual === 'tres')
+    el.innerHTML = '📐 Escala intermedia: <b>'+r.px+' px por día</b>. Una tarea de 3 días mide <b>'+
+      ancho+' píxeles</b>. Sirve para el avance por fase, no para el detalle.';
+  else
+    el.innerHTML = '🔍 Escala de trabajo: <b>'+r.px+' px por día</b>. Una tarea de 3 días mide <b>'+
+      ancho+' píxeles</b>. Se distingue cada tarea y se lee su duración.';
+}
+
+function pintaGantt(){
+  var r = rangoZoom(), pxDia = r.px;
+  var anchoTotal = Math.round(r.dias * pxDia);
+  var h = '<table class="g" style="width:'+(290+anchoTotal)+'px">';
+
+  h += '<thead><tr><th class="col-nom">Fase / Tarea</th>';
+  if (pxDia < 25){
+    var m = new Date(r.ini.getTime());
+    while (m <= r.fin){
+      var fm = new Date(m.getFullYear(), m.getMonth()+1, 1);
+      var a = m < r.ini ? r.ini : m, b = fm > r.fin ? r.fin : fm;
+      var w = Math.round(Math.max(dias(a,b)*pxDia, 0));
+      if (w > 0){
+        var nom = ['ENE','FEB','MAR','ABR','MAY','JUN','JUL','AGO','SEP','OCT','NOV','DIC'][m.getMonth()];
+        h += '<th style="width:'+w+'px">'+nom+' '+String(m.getFullYear()).slice(2)+'</th>';
+      }
+      m = fm;
+    }
+  } else {
+    var d = new Date(r.ini.getTime()), sem = 1;
+    while (d <= r.fin){
+      var w2 = Math.round(Math.min(7, dias(d, r.fin))*pxDia);
+      if (w2 > 0) h += '<th style="width:'+w2+'px">S'+sem+
+        '<br><span style="font-size:8.5px;opacity:.7">'+d.getDate()+'/'+(d.getMonth()+1)+'</span></th>';
+      d = sumaDias(d,7); sem++;
+    }
+  }
+  h += '</tr></thead><tbody>';
+
+  FASES.forEach(function(f){
+    var fas = DATOS.meta.fases[f];
+    var ini = fecha(fas.inicio), fin = fecha(fas.fin);
+    if (fin < r.ini || ini > r.fin) return;
+    var v = veredictoFase(f), e = esfuerzoFase(f);
+    var clF = (v.holgura<0 && v.pct<100) ? 'retraso' : (v.pct===100 ? 'hecho' : (v.pct>0 ? 'activo' : 'pend'));
+    var x0 = Math.round(Math.max(0, dias(r.ini,ini))*pxDia);
+    var x1 = Math.round(Math.min(r.dias, dias(r.ini,fin))*pxDia);
+    var ancho = Math.max(x1-x0, 4);
+
+    h += '<tr class="fase"><td class="col-nom" onclick="verFase(\''+f+'\')">'+
+      '<div class="fn">'+f+' · '+fas.nombre+'</div>'+
+      '<div class="fs">hito '+fas.hito+' · '+fas.semanas+' sem · '+v.pct+'% · '+e.total+' días</div></td>'+
+      '<td class="barra" style="width:'+anchoTotal+'px">';
+    h += '<div class="b fase '+clF+'" style="left:'+x0+'px;width:'+ancho+'px" onclick="verFase(\''+f+'\')">';
+    if (v.pct > 0) h += '<div class="prog" style="width:'+v.pct+'%"></div>';
+    h += '<span class="etq">'+f+'</span></div>';
+    var xh = Math.round(dias(r.ini,fin)*pxDia);
+    if (xh >= 0 && xh <= anchoTotal)
+      h += '<div class="hito" style="left:'+xh+'px" title="'+fas.hito+'" onclick="verFase(\''+f+'\')"></div>';
+    h += '</td></tr>';
+
+    var cursor = new Date(ini.getTime());
+    tareasDe(f).forEach(function(id){
+      var t = DATOS.tareas[id], c = clasificar(id);
+      var dur = Math.max(1, Math.round((t.dias||1)*FINDE));
+      var bx0 = Math.round(dias(r.ini,cursor)*pxDia);
+      var bancho = Math.max(Math.round(dur*pxDia), 3);
+      var visible = (bx0+bancho > 0) && (bx0 < anchoTotal);
+      if (bx0 < 0){ bancho += bx0; bx0 = 0; }
+      cursor = sumaDias(cursor, dur);
+
+      h += '<tr class="tar '+(t.estado==='hecho'?'hecho':(t.estado==='user'?'user':''))+'">';
+      h += '<td class="col-nom" onclick="abrirFicha(\''+id+'\')"><span class="tid">'+id+'</span>'+t.nombre+'</td>';
+      h += '<td class="barra" style="width:'+anchoTotal+'px">';
+      if (visible && bancho > 0){
+        h += '<div class="b '+c+'" style="left:'+bx0+'px;width:'+bancho+'px" onclick="abrirFicha(\''+id+'\')" title="'+
+             id+' · '+t.nombre+' ('+(t.dias||0)+' d)">';
+        if (pxDia >= 35 && bancho > 50) h += '<span class="etq">'+(t.dias||0)+' d</span>';
+        h += '</div>';
+      }
+      h += '</td></tr>';
+    });
+  });
+  h += '</tbody></table>';
+
+  var xhoy = Math.round(dias(r.ini,HOY)*pxDia);
+  var guia = (xhoy >= 0 && xhoy <= anchoTotal)
+    ? '<div class="hoylin" style="left:'+xhoy+'px"><span class="lb">HOY</span></div>' : '';
+  document.getElementById('gwrap').innerHTML =
+    '<div style="position:relative;display:inline-block">'+h+guia+'</div>';
+}
+
+function verFase(f){
+  var fas = DATOS.meta.fases[f], v = veredictoFase(f), e = esfuerzoFase(f);
+  var tareas = tareasDe(f), r = rangoZoom();
+  var h = '<div class="fh"><button class="fh-volver" onclick="cerrarFicha()">← Cerrar</button>'+
+          '<div class="fh-cod">'+f+'</div><h2>'+fas.nombre+'</h2>'+
+          '<div class="fh-meta"><span class="fh-tag">Hito '+fas.hito+'</span>'+
+          '<span class="fh-tag">'+fas.semanas+' semanas</span>'+
+          '<span class="fh-tag">Del '+fas.inicio+' al '+fas.fin+'</span>'+
+          '<span class="fh-tag">'+e.total+' días de trabajo</span></div></div>';
+  h += '<div class="fb"><div class="f2col"><div>'+
+       '<div class="fbloque '+(v.holgura<0?'rojo':'azul')+'"><h3>¿Alcanza al hito?</h3>'+
+       '<p style="font-size:24px;font-weight:700;color:'+(v.holgura<0?'#dc2626':'#059669')+'">'+
+       (v.holgura<0?v.holgura:'+'+v.holgura)+' días</p>'+
+       '<p style="margin-top:8px">Quedan <b>'+v.queda+' días</b> de calendario y falta trabajar <b>'+
+       v.necesita+' días</b> a 3-4 h por día, descontando fines de semana.<br><br>'+
+       (v.holgura<0?'No alcanza. Cada día sin avanzar empuja todo lo de abajo.'
+                   :'Alcanza, con margen para un imprevisto de '+v.holgura+' días.')+'</p></div></div>';
+  h += '<div><div class="fbloque"><h3>Esfuerzo</h3><p><b>'+e.hecho+'</b> de <b>'+e.total+
+       '</b> días completados ('+v.pct+'%).<br>Quedan <b>'+e.resta+'</b> días.</p>'+
+       '<div class="fbarra"><div style="width:'+v.pct+'%"></div></div></div></div></div>';
+
+  h += '<div class="fbloque"><h3>Tareas con duración real · haz clic para abrir su ficha</h3>'+
+       '<table style="width:100%;border-collapse:collapse;font-size:12.5px">'+
+       '<tr><th style="text-align:left;padding:6px;color:#64748b;font-size:10.5px;text-transform:uppercase;border-bottom:2px solid #e2e8f0">Tarea</th>'+
+       '<th style="text-align:left;padding:6px;color:#64748b;font-size:10.5px;text-transform:uppercase;border-bottom:2px solid #e2e8f0">Días</th>'+
+       '<th style="text-align:left;padding:6px;color:#64748b;font-size:10.5px;text-transform:uppercase;border-bottom:2px solid #e2e8f0">En pantalla</th>'+
+       '<th style="text-align:left;padding:6px;color:#64748b;font-size:10.5px;text-transform:uppercase;border-bottom:2px solid #e2e8f0">Estado</th></tr>';
+  tareas.forEach(function(id){
+    var t = DATOS.tareas[id], c = clasificar(id);
+    var px = Math.max(Math.round((t.dias||1)*FINDE*r.px), 3);
+    var nom = {hecho:'Hecha',activo:'Se puede trabajar',retraso:'Urgente',
+               bloqueada:'Bloqueada',user:'Tu acción'}[c];
+    var col = {hecho:'#059669',activo:'#0284c7',retraso:'#dc2626',
+               bloqueada:'#334155',user:'#b91c1c'}[c];
+    h += '<tr style="cursor:pointer" onclick="abrirFicha(\''+id+'\')">'+
+         '<td style="padding:6px;border-bottom:1px solid #f1f5f9">'+
+         '<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:'+col+';margin-right:6px"></span>'+
+         id+' · '+t.nombre+'</td>'+
+         '<td style="padding:6px;border-bottom:1px solid #f1f5f9">'+(t.dias||0)+'</td>'+
+         '<td style="padding:6px;border-bottom:1px solid #f1f5f9;color:#94a3b8">'+px+' px</td>'+
+         '<td style="padding:6px;border-bottom:1px solid #f1f5f9">'+nom+'</td></tr>';
+  });
+  h += '</table></div></div>';
+  pintarFicha(h);
+}
+</script>
+
+<script>
+/* ══════════════════════════════════════════════════════════════
+   LA FICHA DE TAREA
+   Una sola funcion. Se abra desde la arquitectura o desde el Gantt,
+   el resultado es identico porque es el mismo codigo.
+   ══════════════════════════════════════════════════════════════ */
+var FICHA_HIST = [];
+
+function fichaHTML(id, opciones){
+  opciones = opciones || {};
+  var t = DATOS.tareas[id];
+  if (!t) return '';
+  var c = clasificar(id);
+  var v = veredictoFase(t.fase);
+  var nodos = nodosDe(id);
+  var sig = desbloqueaA(id);
+
+  var ETIQ = {hecho:'COMPLETADA', activo:'SE PUEDE TRABAJAR', retraso:'URGENTE',
+              bloqueada:'BLOQUEADA', user:'ESPERA TU ACCION'};
+
+  var h = '<div class="fh">';
+  if (opciones.onVolver)
+    h += '<button class="fh-volver" onclick="'+opciones.onVolver+'">← '+
+         (opciones.volver||'Volver')+'</button>';
+  h += '<div class="fh-cod">'+id+'</div><h2>'+t.nombre+'</h2><div class="fh-meta">';
+  h += '<span class="fh-tag est-'+c+'">'+ETIQ[c]+'</span>';
+  h += '<span class="fh-tag">Fase '+t.fase+' · '+DATOS.meta.fases[t.fase].nombre+'</span>';
+  if (t.dias) h += '<span class="fh-tag">'+t.dias+' día'+(t.dias===1?'':'s')+' de trabajo</span>';
+  if (t.fecha) h += '<span class="fh-tag ok">Completada el '+t.fecha+'</span>';
+  h += '</div></div>';
+
+  h += '<div class="fb">';
+  h += '<div class="fbloque azul"><h3>Para qué sirve</h3><p>'+(t.porque||'Sin descripción.')+'</p></div>';
+  h += '<div class="f2col">';
+  h += '<div class="fbloque"><h3>Qué produce</h3><p>'+(t.entregable||'Todavía sin entregable definido.')+'</p></div>';
+  h += '<div class="fbloque"><h3>De qué depende</h3><p>';
+  if (t.depende && t.depende.length){
+    t.depende.forEach(function(d){
+      var dt = DATOS.tareas[d], hecho = dt && dt.estado === 'hecho';
+      h += '<span class="fchip '+(hecho?'ok':'pend')+'" onclick="abrirFicha(\''+d+'\')">'+
+           (hecho?'✓ ':'· ')+d+' · '+(dt?dt.nombre:'?')+'</span> ';
+    });
+  } else h += '<b>Nada.</b> Puede empezar de inmediato.';
+  h += '</p></div></div>';
+
+  h += '<div class="fbloque"><h3>Qué desbloquea cuando termine</h3><p>';
+  if (sig.length)
+    sig.forEach(function(d){
+      h += '<span class="fchip" onclick="abrirFicha(\''+d+'\')">'+d+' · '+DATOS.tareas[d].nombre+'</span> ';
+    });
+  else h += 'Nada. Es una tarea terminal de la cadena.';
+  h += '</p></div>';
+
+  if (t.nota)
+    h += '<div class="fbloque amarillo"><h3>Nota de avance</h3><p>'+t.nota+'</p></div>';
+
+  if (t.estado !== 'hecho'){
+    var cl = v.holgura < 0 ? 'rojo' : (v.holgura < 7 ? 'amarillo' : 'azul');
+    var txt = v.holgura < 0
+      ? 'La Fase '+t.fase+' no alcanza su hito: faltan <b>'+Math.abs(v.holgura)+
+        ' días</b>. Cierra el '+DATOS.meta.fases[t.fase].fin+
+        '. Cada día sin avanzar aquí empuja todo lo de abajo.'
+      : 'La Fase '+t.fase+' alcanza su hito con <b>'+v.holgura+
+        ' días</b> de margen. Cierra el '+DATOS.meta.fases[t.fase].fin+'.';
+    h += '<div class="fbloque '+cl+'"><h3>Situación de la fase '+t.fase+'</h3><p>'+txt+'</p>'+
+         '<div class="fbarra"><div style="width:'+v.pct+'%"></div></div>'+
+         '<p class="fmini">'+v.esfuerzo.hecho+' de '+v.esfuerzo.total+
+         ' días de trabajo completados ('+v.pct+'%)</p></div>';
+  }
+
+  h += '<div class="fbloque"><h3>Dónde vive en la arquitectura</h3><p>';
+  if (nodos.length)
+    nodos.forEach(function(n){
+      h += '<span class="fchip dom" onclick="irANodo(\''+n.id+'\')">'+n.icono+' '+n.nombre+'</span> ';
+    });
+  else h += 'Todavía no está asignada a ningún nodo del diagrama.';
+  h += '</p></div></div>';
+  return h;
+}
+
+function pintarFicha(html){
+  document.getElementById('ficha-zona').innerHTML =
+    '<div class="ficha-wrap">'+html+'</div>';
+  document.getElementById('ficha-zona').scrollIntoView({behavior:'smooth', block:'start'});
+}
+
+function abrirFicha(id){
+  if (!DATOS.tareas[id]) return;
+  FICHA_HIST.push(id);
+  var puedeVolver = FICHA_HIST.length > 1;
+  pintarFicha(fichaHTML(id, {
+    volver: puedeVolver ? 'Volver' : (PESTANA==='arq' ? 'Volver al diagrama' : 'Volver al Gantt'),
+    onVolver: 'volverFicha()'
+  }));
+}
+function volverFicha(){
+  FICHA_HIST.pop();
+  if (FICHA_HIST.length){
+    var id = FICHA_HIST[FICHA_HIST.length-1];
+    pintarFicha(fichaHTML(id, {
+      volver: FICHA_HIST.length > 1 ? 'Volver' : (PESTANA==='arq' ? 'Volver al diagrama' : 'Volver al Gantt'),
+      onVolver: 'volverFicha()'
+    }));
+  } else {
+    cerrarFicha();
+    if (PESTANA === 'arq' && NODO_ACTUAL) verNodo(NODO_ACTUAL, true);
+  }
+}
+function cerrarFicha(){
+  FICHA_HIST = [];
+  document.getElementById('ficha-zona').innerHTML = '';
+}
+function irANodo(id){
+  if (PESTANA !== 'arq') pestana('arq');
+  cerrarFicha();
+  verNodo(id);
+}
+</script>
+
+<script>
+/* ══════════════════════════════════════════════════════════════
+   ARRANQUE
+   ══════════════════════════════════════════════════════════════ */
+document.getElementById('fhoy').textContent = DATOS.meta.hoy;
+pintaBarra();
+pintaAlertas();
+pintaPFD();
+pintaDetalles();
+pintaZoom();
+pintaEscala();
+</script>
+
 </body>
 </html>
