@@ -604,6 +604,89 @@ footer{background:var(--g900); color:#CFE0EE; margin-top:34px; padding:26px 22px
     <p>Todo lo que cambió respecto a la versión 1, con enlace directo a la sección donde se detalla. Fecha de las decisiones: <strong>2026-09-17</strong> (DA-1 a DA-5 · ADR-001 a ADR-006).</p>
   </div>
 
+  <!-- ── ESTADO DE AVANCE ── -->
+  <div class="card" style="border:2px solid #52D8A1">
+    <h3 style="border-bottom-color:#52D8A1;color:#065f46">📊 Estado de avance — 18 septiembre 2026</h3>
+    <p class="hint">Progreso real del desarrollo, con evidencia verificada.</p>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:12px;margin:16px 0">
+      <div style="background:#f0fdf4;border-radius:10px;padding:14px;text-align:center">
+        <div style="font-size:28px;font-weight:700;color:#059669">5</div>
+        <div style="font-size:12px;color:#64748b">Tareas completadas</div>
+      </div>
+      <div style="background:#f8fafc;border-radius:10px;padding:14px;text-align:center">
+        <div style="font-size:28px;font-weight:700;color:#007BFF">18</div>
+        <div style="font-size:12px;color:#64748b">Tareas de Fase 0</div>
+      </div>
+      <div style="background:#f8fafc;border-radius:10px;padding:14px;text-align:center">
+        <div style="font-size:28px;font-weight:700;color:#FF5722">5,4%</div>
+        <div style="font-size:12px;color:#64748b">Del total (92 tareas)</div>
+      </div>
+      <div style="background:#f0fdf4;border-radius:10px;padding:14px;text-align:center">
+        <div style="font-size:28px;font-weight:700;color:#059669">✅</div>
+        <div style="font-size:12px;color:#64748b">Punto de no retorno superado</div>
+      </div>
+    </div>
+
+    <table>
+      <thead>
+        <tr><th style="width:70px">ID</th><th>Tarea completada</th><th style="width:110px">Fecha</th><th>Evidencia</th></tr>
+      </thead>
+      <tbody>
+        <tr style="background:#f0fdf4">
+          <td><span class="tag">F0-01</span></td>
+          <td><b>Monorepo pnpm + Turborepo</b></td>
+          <td>2026-09-18</td>
+          <td>3 paquetes compilando en orden de dependencia (8,79 s)</td>
+        </tr>
+        <tr style="background:#f0fdf4">
+          <td><span class="tag">F0-02</span></td>
+          <td><b>TypeScript + configuración base</b></td>
+          <td>2026-09-18</td>
+          <td><code>packages/config/tsconfig.base.json</code> en modo estricto</td>
+        </tr>
+        <tr style="background:#f0fdf4">
+          <td><span class="tag">F0-03</span></td>
+          <td><b>Estructura de carpetas</b> (1 app multirol)</td>
+          <td>2026-09-18</td>
+          <td><code>apps/{api,mobile,admin-web}</code> + <code>packages/*</code></td>
+        </tr>
+        <tr style="background:#f0fdf4">
+          <td><span class="tag">F0-04</span></td>
+          <td><b>CI/CD con GitHub Actions</b></td>
+          <td>2026-09-18</td>
+          <td>3 jobs: verificación, auditoría, prueba de arranque</td>
+        </tr>
+        <tr style="background:#d1fae5">
+          <td><span class="tag">F0-05</span></td>
+          <td><b>★ Prototipo NestJS + Fastify</b></td>
+          <td>2026-09-18</td>
+          <td><b>PUNTO DE NO RETORNO SUPERADO</b> — 7/7 pruebas exitosas</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="crit" style="margin-top:16px;background:#f0fdf4;border-left-color:#059669">
+      <strong>✅ El riesgo principal quedó despejado:</strong> se validó que NestJS + Fastify es viable con 1 persona a 3-4 h/día.
+      La máquina de estados funciona, la idempotencia funciona y la API responde correctamente.
+    </div>
+
+    <h4 style="margin-top:20px;font-size:14px;font-weight:600">Próximas tareas de Fase 0</h4>
+    <table>
+      <thead>
+        <tr><th style="width:70px">ID</th><th>Tarea</th><th style="width:180px">Estado</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><span class="tag">F0-07</span></td><td>Docker: PostgreSQL + PostGIS</td><td><span class="badge b-pen">Requiere Docker</span></td></tr>
+        <tr><td><span class="tag">F0-08</span></td><td>Prisma + esquema con PostGIS</td><td><span class="badge b-pen">Depende de F0-07</span></td></tr>
+        <tr><td><span class="tag">F0-09</span></td><td>Contratos de adaptadores</td><td><span class="badge b-ok">Listo para empezar</span></td></tr>
+        <tr><td><span class="tag">F0-12</span></td><td>Diseño offline-first (ADR-005 ya escrito)</td><td><span class="badge b-ok">Listo para empezar</span></td></tr>
+        <tr style="background:#fef2f2"><td><span class="tag">F0-13</span></td><td><b>Reservar bundle IDs + dominio</b></td><td><span class="badge b-no">⚠️ ACCIÓN DEL USUARIO</span></td></tr>
+        <tr style="background:#fef2f2"><td><span class="tag">F0-18</span></td><td><b>Solicitar vectoriales del logo</b></td><td><span class="badge b-no">⚠️ ACCIÓN DEL USUARIO</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
   <div class="card">
     <h3>📋 Tabla de cambios de la versión 2</h3>
     <p class="hint">Haz clic en cualquier fila para ir a la sección. Los badges indican la naturaleza del cambio: <span class="badge b-acc">🔄 ACTUALIZADO</span> <span class="badge b-ok">🆕 NUEVO</span> <span class="badge b-no">❌ RETIRADO</span> <span class="badge b-mut">✅ SIN CAMBIO</span></p>
